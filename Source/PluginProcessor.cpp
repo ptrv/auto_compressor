@@ -33,7 +33,6 @@ AutoCompressorAudioProcessor::AutoCompressorAudioProcessor()
     {
         setParameter(i, getParameterDefaultValue(i));
     }
-
 }
 
 AutoCompressorAudioProcessor::~AutoCompressorAudioProcessor()
@@ -330,7 +329,7 @@ void AutoCompressorAudioProcessor::releaseResources()
 
 void AutoCompressorAudioProcessor::processBlock (AudioSampleBuffer& buffer, MidiBuffer& midiMessages)
 {
-    int numSamples = buffer.getNumSamples();
+    const int numSamples = buffer.getNumSamples();
 
     const double fs = getSampleRate();
     rampCoeff = onePoleCoeff(fs, 0.05);
@@ -340,10 +339,10 @@ void AutoCompressorAudioProcessor::processBlock (AudioSampleBuffer& buffer, Midi
         float* dataL = buffer.getSampleData(0);
         float* dataR = buffer.getSampleData(1);
 
-        while (--numSamples >= 0)
+        for (int i = 0; i < numSamples; ++i)
         {
-            float inL = *dataL;
-            float inR = *dataR;
+            float inL = dataL[i];
+            float inR = dataR[i];
 
             float absL = ABS(inL);
             float absR = ABS(inR);
@@ -359,8 +358,9 @@ void AutoCompressorAudioProcessor::processBlock (AudioSampleBuffer& buffer, Midi
                 outR *= mult;
             }
 
-            *dataL++ = outL;
-            *dataR++ = outR;
+
+            dataL[i] = outL;
+            dataR[i] = outR;
 
             logThreshold[kCurrent] = MIX(logThreshold[kTarget], logThreshold[kCurrent], rampCoeff);
             logGain[kCurrent] = MIX(logGain[kTarget], logGain[kCurrent], rampCoeff);
@@ -375,6 +375,7 @@ void AutoCompressorAudioProcessor::processBlock (AudioSampleBuffer& buffer, Midi
         logThreshold[kCurrent] = killDenormal(logThreshold[kCurrent]);
         logGain[kCurrent] = killDenormal(logGain[kCurrent]);
     }
+
     // In case we have more outputs than inputs, we'll clear any output
     // channels that didn't contain input data, (because these aren't
     // guaranteed to be empty - they may contain garbage).
