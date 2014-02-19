@@ -453,6 +453,9 @@ forcedinline double AutoCompressorAudioProcessor::processSidechain(float inAbs)
     cvAttack = MIX(cvRelease, cvAttack, myAttackCoeff);
 
     // Invert CV again
+    cv = -cvAttack;
+
+    // Smooth CV
     cvSmooth = MIX(cv - cvEstimate, cvSmooth, metaAdaptCoeff);
 
     // make up gain
