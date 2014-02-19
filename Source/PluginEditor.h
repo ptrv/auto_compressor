@@ -36,7 +36,8 @@
 */
 class AutoCompressorAudioProcessorEditor  : public AudioProcessorEditor,
                                             public Timer,
-                                            public SliderListener
+                                            public SliderListener,
+                                            public ButtonListener
 {
 public:
     //==============================================================================
@@ -51,6 +52,7 @@ public:
     void paint (Graphics& g);
     void resized();
     void sliderValueChanged (Slider* sliderThatWasMoved);
+    void buttonClicked (Button* buttonThatWasClicked);
 
 
 
@@ -60,6 +62,22 @@ private:
 
     //==============================================================================
     ScopedPointer<Slider> slider;
+    ScopedPointer<Slider> slider2;
+    ScopedPointer<Label> label;
+    ScopedPointer<Label> label2;
+    ScopedPointer<Slider> slider3;
+    ScopedPointer<Slider> slider4;
+    ScopedPointer<Label> label3;
+    ScopedPointer<Label> label4;
+    ScopedPointer<Slider> slider5;
+    ScopedPointer<Slider> slider6;
+    ScopedPointer<Label> label5;
+    ScopedPointer<Label> label6;
+    ScopedPointer<ToggleButton> toggleButton;
+    ScopedPointer<ToggleButton> toggleButton2;
+    ScopedPointer<ToggleButton> toggleButton3;
+    ScopedPointer<ToggleButton> toggleButton4;
+    ScopedPointer<ToggleButton> toggleButton5;
 
 
     //==============================================================================
