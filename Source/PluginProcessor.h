@@ -79,6 +79,8 @@ public:
 
     void processBlock (AudioSampleBuffer& buffer, MidiBuffer& midiMessages);
 
+    float getMeter();
+
     //==============================================================================
     AudioProcessorEditor* createEditor();
     bool hasEditor() const;
@@ -90,6 +92,7 @@ public:
 
     float getParameter (int index);
     float getParameterDefaultValue(int index);
+    float getParameterFromString(int index, const String& text);
 
     void setParameter (int index, float newValue);
 

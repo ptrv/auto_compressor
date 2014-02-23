@@ -51,6 +51,7 @@ ifeq ($(CONFIG),Release)
 endif
 
 OBJECTS := \
+  $(OBJDIR)/ParamSlider_4125232f.o \
   $(OBJDIR)/PluginEditor_94d4fb09.o \
   $(OBJDIR)/PluginProcessor_a059e380.o \
   $(OBJDIR)/juce_audio_basics_5460bccb.o \
@@ -86,6 +87,11 @@ clean:
 strip:
 	@echo Stripping AutoCompressor
 	-@strip --strip-unneeded $(OUTDIR)/$(TARGET)
+
+$(OBJDIR)/ParamSlider_4125232f.o: ../../Source/ParamSlider.cpp
+	-@mkdir -p $(OBJDIR)
+	@echo "Compiling ParamSlider.cpp"
+	@$(CXX) $(CXXFLAGS) -o "$@" -c "$<"
 
 $(OBJDIR)/PluginEditor_94d4fb09.o: ../../Source/PluginEditor.cpp
 	-@mkdir -p $(OBJDIR)

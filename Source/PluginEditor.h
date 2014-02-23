@@ -22,6 +22,7 @@
 
 //[Headers]     -- You can add your own extra header files here --
 #include "../JuceLibraryCode/JuceHeader.h"
+#include "ParamSlider.h"
 //[/Headers]
 
 
@@ -54,30 +55,51 @@ public:
     void sliderValueChanged (Slider* sliderThatWasMoved);
     void buttonClicked (Button* buttonThatWasClicked);
 
+    // Binary resources:
+    static const char* bt_off_png;
+    static const int bt_off_pngSize;
+    static const char* bt_on_png;
+    static const int bt_on_pngSize;
+    static const char* bt_off2_png;
+    static const int bt_off2_pngSize;
+    static const char* bt_on2_png;
+    static const int bt_on2_pngSize;
 
 
 private:
     //[UserVariables]   -- You can add your own custom variables in this section.
+    typedef AutoCompressorAudioProcessor ACProc;
+    typedef AutoCompressorAudioProcessorEditor ACEditor;
+
+    AutoCompressorAudioProcessor* getProcessor() const
+    {
+        return static_cast<AutoCompressorAudioProcessor*>(getAudioProcessor());
+    }
+
+    double convertTextToValue(int index, const String& text);
+    String convertValueToText(int index, double value);
+
     //[/UserVariables]
 
     //==============================================================================
-    ScopedPointer<Slider> slider;
-    ScopedPointer<Slider> slider2;
+    ScopedPointer<ParamSlider> ratioSlider;
+    ScopedPointer<ParamSlider> kneeWidthSlider;
     ScopedPointer<Label> label;
     ScopedPointer<Label> label2;
-    ScopedPointer<Slider> slider3;
-    ScopedPointer<Slider> slider4;
+    ScopedPointer<ParamSlider> attackSlider;
+    ScopedPointer<ParamSlider> releaseSlider;
     ScopedPointer<Label> label3;
     ScopedPointer<Label> label4;
-    ScopedPointer<Slider> slider5;
-    ScopedPointer<Slider> slider6;
+    ScopedPointer<ParamSlider> gainSlider;
+    ScopedPointer<ParamSlider> thresholdSlider;
     ScopedPointer<Label> label5;
     ScopedPointer<Label> label6;
-    ScopedPointer<ToggleButton> toggleButton;
-    ScopedPointer<ToggleButton> toggleButton2;
-    ScopedPointer<ToggleButton> toggleButton3;
-    ScopedPointer<ToggleButton> toggleButton4;
-    ScopedPointer<ToggleButton> toggleButton5;
+    ScopedPointer<Label> meterLabel;
+    ScopedPointer<ImageButton> imageButton;
+    ScopedPointer<ImageButton> autoKneeButton;
+    ScopedPointer<ImageButton> autoGainButton;
+    ScopedPointer<ImageButton> autoAttackButton;
+    ScopedPointer<ImageButton> autoReleaseButton;
 
 
     //==============================================================================

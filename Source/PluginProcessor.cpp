@@ -82,6 +82,22 @@ float AutoCompressorAudioProcessor::getParameterDefaultValue(int index)
     }
     return 0.f;
 }
+
+float AutoCompressorAudioProcessor::getParameterFromString(int index, const String& text)
+{
+    double x = text.getDoubleValue();
+    switch (index)
+    {
+    case thresholdParam: return (float) CLAMP(fabs(x) / MAXGAINDB, 0.0, 1.0);
+    case ratioParam: return (float) (1.0 - 1.0 / CLAMP(fabs(x), 1.0, 100.0));
+    case kneeWidthParam: return (float) CLAMP(fabs(x) / MAXGAINDB, 0.0, 1.0);
+    case gainParam: return (float) CLAMP(fabs(x) / MAXGAINDB, 0.0, 1.0);
+    case attackParam: return (float) LOG2PARAM(CLAMP(fabs(x) / 1000.0, MINATTACKTIME, MAXATTACKTIME), MINATTACKTIME, MAXATTACKTIME);
+    case releaseParam: return (float) LOG2PARAM(CLAMP(fabs(x) / 1000.0, MINRELEASETIME, MAXRELEASETIME), MINRELEASETIME, MAXRELEASETIME);
+    }
+    return getParameter(index);
+}
+
 void AutoCompressorAudioProcessor::setParameter (int index, float newValue)
 {
     params[index] = newValue;
@@ -329,20 +345,21 @@ void AutoCompressorAudioProcessor::releaseResources()
 
 void AutoCompressorAudioProcessor::processBlock (AudioSampleBuffer& buffer, MidiBuffer& midiMessages)
 {
-    const int numSamples = buffer.getNumSamples();
+    int numSamples = buffer.getNumSamples();
 
     const double fs = getSampleRate();
     rampCoeff = onePoleCoeff(fs, 0.05);
 
-    if (getNumInputChannels() >= 2 && getNumOutputChannels() >= 2)
+    if (buffer.getNumChannels() >= 2)
     {
         float* dataL = buffer.getSampleData(0);
         float* dataR = buffer.getSampleData(1);
 
-        for (int i = 0; i < numSamples; ++i)
+        while(--numSamples >= 0)
+        //for (int i = 0; i < numSamples; ++i)
         {
-            float inL = dataL[i];
-            float inR = dataR[i];
+            float inL = *dataL;
+            float inR = *dataR;
 
             float absL = ABS(inL);
             float absR = ABS(inR);
@@ -359,8 +376,8 @@ void AutoCompressorAudioProcessor::processBlock (AudioSampleBuffer& buffer, Midi
             }
 
 
-            dataL[i] = outL;
-            dataR[i] = outR;
+            *dataL++ = outL;
+            *dataR++ = outR;
 
             logThreshold[kCurrent] = MIX(logThreshold[kTarget], logThreshold[kCurrent], rampCoeff);
             logGain[kCurrent] = MIX(logGain[kTarget], logGain[kCurrent], rampCoeff);
@@ -478,6 +495,15 @@ forcedinline double AutoCompressorAudioProcessor::processSidechain(float inAbs)
     return exp(cv);
 }
 
+float AutoCompressorAudioProcessor::getMeter()
+{
+    if (active)
+    {
+        return (float) CLAMP((-cvAttack - MINMETERLOG) / (0.0 - MINMETERLOG), 0.0, 1.0);
+    }
+    return 1.f;
+
+}
 //==============================================================================
 bool AutoCompressorAudioProcessor::hasEditor() const
 {
