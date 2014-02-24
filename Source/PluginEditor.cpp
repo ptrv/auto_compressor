@@ -213,7 +213,7 @@ AutoCompressorAudioProcessorEditor::AutoCompressorAudioProcessorEditor (AutoComp
 
     //[/UserPreSize]
 
-    setSize (550, 400);
+    setSize (460, 400);
 
 
     //[Constructor] You can add your own custom stuff here..
@@ -267,7 +267,7 @@ void AutoCompressorAudioProcessorEditor::paint (Graphics& g)
     g.fillAll (Colour (0xff393939));
 
     g.setColour (Colour (0xff355c2e));
-    g.fillRoundedRectangle (0.0f, 0.0f, 548.0f, 48.0f, 10.000f);
+    g.fillRoundedRectangle (0.0f, 0.0f, 460.0f, 48.0f, 10.000f);
 
     g.setColour (Colours::black);
     g.setFont (Font (28.00f, Font::plain));
@@ -275,14 +275,14 @@ void AutoCompressorAudioProcessorEditor::paint (Graphics& g)
                 8, 8, 208, 30,
                 Justification::centredLeft, true);
 
-    g.setColour (Colour (0xff5e6c61));
-    g.fillRoundedRectangle (0.0f, 48.0f, 548.0f, 352.0f, 10.000f);
-
     g.setColour (Colours::black);
     g.setFont (Font (24.00f, Font::plain));
     g.drawText (TRANS("ptrv.org"),
-                454, 11, 80, 30,
+                354, 8, 80, 30,
                 Justification::centredRight, true);
+
+    g.setColour (Colour (0xff5e6c61));
+    g.fillRoundedRectangle (0.0f, 48.0f, 460.0f, 352.0f, 10.000f);
 
     //[UserPaint] Add your own custom painting code here..
     //[/UserPaint]
@@ -290,24 +290,24 @@ void AutoCompressorAudioProcessorEditor::paint (Graphics& g)
 
 void AutoCompressorAudioProcessorEditor::resized()
 {
-    ratioSlider->setBounds (144, 132, 212, 32);
-    kneeWidthSlider->setBounds (144, 176, 212, 20);
-    label->setBounds (12, 136, 120, 24);
-    label2->setBounds (12, 176, 80, 24);
-    attackSlider->setBounds (144, 300, 212, 20);
-    releaseSlider->setBounds (144, 344, 212, 20);
-    label3->setBounds (16, 296, 80, 24);
-    label4->setBounds (16, 344, 94, 24);
-    gainSlider->setBounds (144, 232, 212, 20);
-    thresholdSlider->setBounds (144, 88, 216, 20);
-    label5->setBounds (12, 232, 100, 24);
-    label6->setBounds (16, 88, 80, 24);
+    ratioSlider->setBounds (144, 148, 212, 32);
+    kneeWidthSlider->setBounds (144, 192, 212, 20);
+    label->setBounds (12, 152, 120, 24);
+    label2->setBounds (12, 192, 80, 24);
+    attackSlider->setBounds (144, 316, 212, 20);
+    releaseSlider->setBounds (144, 360, 212, 20);
+    label3->setBounds (16, 312, 80, 24);
+    label4->setBounds (16, 360, 94, 24);
+    gainSlider->setBounds (144, 248, 212, 20);
+    thresholdSlider->setBounds (144, 104, 216, 20);
+    label5->setBounds (12, 248, 100, 24);
+    label6->setBounds (16, 104, 80, 24);
     meterLabel->setBounds (12, 60, 150, 24);
-    imageButton->setBounds (472, 56, 52, 24);
-    autoKneeButton->setBounds (392, 156, 50, 24);
-    autoGainButton->setBounds (392, 232, 50, 24);
-    autoAttackButton->setBounds (392, 300, 50, 24);
-    autoReleaseButton->setBounds (392, 340, 50, 24);
+    imageButton->setBounds (392, 56, 52, 24);
+    autoKneeButton->setBounds (392, 172, 50, 24);
+    autoGainButton->setBounds (392, 248, 50, 24);
+    autoAttackButton->setBounds (392, 316, 50, 24);
+    autoReleaseButton->setBounds (392, 356, 50, 24);
     //[UserResized] Add your own custom resize handling here..
     //[/UserResized]
 }
@@ -455,7 +455,6 @@ void AutoCompressorAudioProcessorEditor::timerCallback()
     }
 
     meterLabel->setText(String(processor->getMeter(), 2), dontSendNotification);
-
 }
 
 double AutoCompressorAudioProcessorEditor::convertTextToValue(int index, const String& text)
@@ -484,66 +483,66 @@ BEGIN_JUCER_METADATA
                  constructorParams="AutoCompressorAudioProcessor* ownerFilter"
                  variableInitialisers="AudioProcessorEditor (ownerFilter)" snapPixels="4"
                  snapActive="1" snapShown="1" overlayOpacity="0.330" fixedSize="1"
-                 initialWidth="550" initialHeight="400">
+                 initialWidth="460" initialHeight="400">
   <BACKGROUND backgroundColour="ff393939">
-    <ROUNDRECT pos="0 0 548 48" cornerSize="10" fill="solid: ff355c2e" hasStroke="0"/>
+    <ROUNDRECT pos="0 0 460 48" cornerSize="10" fill="solid: ff355c2e" hasStroke="0"/>
     <TEXT pos="8 8 208 30" fill="solid: ff000000" hasStroke="0" text="auto_compressor"
           fontname="Default font" fontsize="28" bold="0" italic="0" justification="33"/>
-    <ROUNDRECT pos="0 48 548 352" cornerSize="10" fill="solid: ff5e6c61" hasStroke="0"/>
-    <TEXT pos="454 11 80 30" fill="solid: ff000000" hasStroke="0" text="ptrv.org"
+    <TEXT pos="354 8 80 30" fill="solid: ff000000" hasStroke="0" text="ptrv.org"
           fontname="Default font" fontsize="24" bold="0" italic="0" justification="34"/>
+    <ROUNDRECT pos="0 48 460 352" cornerSize="10" fill="solid: ff5e6c61" hasStroke="0"/>
   </BACKGROUND>
   <SLIDER name="ratioSlider" id="ffe07162fd997e54" memberName="ratioSlider"
-          virtualName="ParamSlider" explicitFocusOrder="0" pos="144 132 212 32"
+          virtualName="ParamSlider" explicitFocusOrder="0" pos="144 148 212 32"
           min="0" max="1" int="0" style="LinearHorizontal" textBoxPos="TextBoxLeft"
           textBoxEditable="1" textBoxWidth="80" textBoxHeight="20" skewFactor="1"/>
   <SLIDER name="kneeWidthSlider" id="f291c6e207934e0e" memberName="kneeWidthSlider"
-          virtualName="ParamSlider" explicitFocusOrder="0" pos="144 176 212 20"
+          virtualName="ParamSlider" explicitFocusOrder="0" pos="144 192 212 20"
           min="0" max="1" int="0" style="LinearHorizontal" textBoxPos="TextBoxLeft"
           textBoxEditable="1" textBoxWidth="80" textBoxHeight="20" skewFactor="1"/>
   <LABEL name="new label" id="28411f247b38ffe2" memberName="label" virtualName=""
-         explicitFocusOrder="0" pos="12 136 120 24" edTextCol="ff000000"
+         explicitFocusOrder="0" pos="12 152 120 24" edTextCol="ff000000"
          edBkgCol="0" labelText="compression ratio" editableSingleClick="0"
          editableDoubleClick="0" focusDiscardsChanges="0" fontname="Default font"
          fontsize="15" bold="0" italic="0" justification="33"/>
   <LABEL name="new label" id="dc3bfe5fa125e797" memberName="label2" virtualName=""
-         explicitFocusOrder="0" pos="12 176 80 24" edTextCol="ff000000"
+         explicitFocusOrder="0" pos="12 192 80 24" edTextCol="ff000000"
          edBkgCol="0" labelText="knee width" editableSingleClick="0" editableDoubleClick="0"
          focusDiscardsChanges="0" fontname="Default font" fontsize="15"
          bold="0" italic="0" justification="33"/>
   <SLIDER name="attackSlider" id="8a15b9bd1874de96" memberName="attackSlider"
-          virtualName="ParamSlider" explicitFocusOrder="0" pos="144 300 212 20"
+          virtualName="ParamSlider" explicitFocusOrder="0" pos="144 316 212 20"
           min="0" max="1" int="0" style="LinearHorizontal" textBoxPos="TextBoxLeft"
           textBoxEditable="1" textBoxWidth="80" textBoxHeight="20" skewFactor="1"/>
   <SLIDER name="releaseSlider" id="5b7ca9c55f02943" memberName="releaseSlider"
-          virtualName="ParamSlider" explicitFocusOrder="0" pos="144 344 212 20"
+          virtualName="ParamSlider" explicitFocusOrder="0" pos="144 360 212 20"
           min="0" max="1" int="0" style="LinearHorizontal" textBoxPos="TextBoxLeft"
           textBoxEditable="1" textBoxWidth="80" textBoxHeight="20" skewFactor="1"/>
   <LABEL name="new label" id="2a1d30cbfcf1fbc8" memberName="label3" virtualName=""
-         explicitFocusOrder="0" pos="16 296 80 24" edTextCol="ff000000"
+         explicitFocusOrder="0" pos="16 312 80 24" edTextCol="ff000000"
          edBkgCol="0" labelText="attack time" editableSingleClick="0"
          editableDoubleClick="0" focusDiscardsChanges="0" fontname="Default font"
          fontsize="15" bold="0" italic="0" justification="33"/>
   <LABEL name="new label" id="e0cf7038120d40c1" memberName="label4" virtualName=""
-         explicitFocusOrder="0" pos="16 344 94 24" edTextCol="ff000000"
+         explicitFocusOrder="0" pos="16 360 94 24" edTextCol="ff000000"
          edBkgCol="0" labelText="release time" editableSingleClick="0"
          editableDoubleClick="0" focusDiscardsChanges="0" fontname="Default font"
          fontsize="15" bold="0" italic="0" justification="33"/>
   <SLIDER name="gainSlider" id="581538f5944b4752" memberName="gainSlider"
-          virtualName="ParamSlider" explicitFocusOrder="0" pos="144 232 212 20"
+          virtualName="ParamSlider" explicitFocusOrder="0" pos="144 248 212 20"
           min="0" max="1" int="0" style="LinearHorizontal" textBoxPos="TextBoxLeft"
           textBoxEditable="1" textBoxWidth="80" textBoxHeight="20" skewFactor="1"/>
   <SLIDER name="thresholdSlider" id="d44fe020750dd2e" memberName="thresholdSlider"
-          virtualName="ParamSlider" explicitFocusOrder="0" pos="144 88 216 20"
+          virtualName="ParamSlider" explicitFocusOrder="0" pos="144 104 216 20"
           min="0" max="1" int="0" style="LinearHorizontal" textBoxPos="TextBoxLeft"
           textBoxEditable="1" textBoxWidth="80" textBoxHeight="20" skewFactor="1"/>
   <LABEL name="new label" id="2c2c65be9dad5998" memberName="label5" virtualName=""
-         explicitFocusOrder="0" pos="12 232 100 24" edTextCol="ff000000"
+         explicitFocusOrder="0" pos="12 248 100 24" edTextCol="ff000000"
          edBkgCol="0" labelText="make-up gain" editableSingleClick="0"
          editableDoubleClick="0" focusDiscardsChanges="0" fontname="Default font"
          fontsize="15" bold="0" italic="0" justification="33"/>
   <LABEL name="new label" id="18f79e7fdd006853" memberName="label6" virtualName=""
-         explicitFocusOrder="0" pos="16 88 80 24" edTextCol="ff000000"
+         explicitFocusOrder="0" pos="16 104 80 24" edTextCol="ff000000"
          edBkgCol="0" labelText="threshold" editableSingleClick="0" editableDoubleClick="0"
          focusDiscardsChanges="0" fontname="Default font" fontsize="15"
          bold="0" italic="0" justification="33"/>
@@ -553,31 +552,31 @@ BEGIN_JUCER_METADATA
          focusDiscardsChanges="0" fontname="Default font" fontsize="15"
          bold="0" italic="0" justification="33"/>
   <IMAGEBUTTON name="new button" id="a12c78ba715400e7" memberName="imageButton"
-               virtualName="" explicitFocusOrder="0" pos="472 56 52 24" buttonText="new button"
+               virtualName="" explicitFocusOrder="0" pos="392 56 52 24" buttonText="new button"
                connectedEdges="0" needsCallback="1" radioGroupId="0" keepProportions="1"
                resourceNormal="bt_off_png" opacityNormal="1" colourNormal="0"
                resourceOver="" opacityOver="1" colourOver="0" resourceDown="bt_on_png"
                opacityDown="1" colourDown="0"/>
   <IMAGEBUTTON name="autoRatioButton" id="19b4c8f5dee0efb5" memberName="autoKneeButton"
-               virtualName="" explicitFocusOrder="0" pos="392 156 50 24" buttonText=""
+               virtualName="" explicitFocusOrder="0" pos="392 172 50 24" buttonText=""
                connectedEdges="0" needsCallback="1" radioGroupId="0" keepProportions="1"
                resourceNormal="bt_off2_png" opacityNormal="1" colourNormal="0"
                resourceOver="" opacityOver="1" colourOver="0" resourceDown="bt_on2_png"
                opacityDown="1" colourDown="0"/>
   <IMAGEBUTTON name="autoGainButton" id="c8f862ce9708f18" memberName="autoGainButton"
-               virtualName="" explicitFocusOrder="0" pos="392 232 50 24" buttonText=""
+               virtualName="" explicitFocusOrder="0" pos="392 248 50 24" buttonText=""
                connectedEdges="0" needsCallback="1" radioGroupId="0" keepProportions="1"
                resourceNormal="bt_off2_png" opacityNormal="1" colourNormal="0"
                resourceOver="" opacityOver="1" colourOver="0" resourceDown="bt_on2_png"
                opacityDown="1" colourDown="0"/>
   <IMAGEBUTTON name="autoAttackButton" id="5f462b4a4228f13a" memberName="autoAttackButton"
-               virtualName="" explicitFocusOrder="0" pos="392 300 50 24" buttonText=""
+               virtualName="" explicitFocusOrder="0" pos="392 316 50 24" buttonText=""
                connectedEdges="0" needsCallback="1" radioGroupId="0" keepProportions="1"
                resourceNormal="bt_off2_png" opacityNormal="1" colourNormal="0"
                resourceOver="" opacityOver="1" colourOver="0" resourceDown="bt_on2_png"
                opacityDown="1" colourDown="0"/>
   <IMAGEBUTTON name="autoReleaseButton" id="f78e3c201b4952ba" memberName="autoReleaseButton"
-               virtualName="" explicitFocusOrder="0" pos="392 340 50 24" buttonText=""
+               virtualName="" explicitFocusOrder="0" pos="392 356 50 24" buttonText=""
                connectedEdges="0" needsCallback="1" radioGroupId="0" keepProportions="1"
                resourceNormal="bt_off2_png" opacityNormal="1" colourNormal="0"
                resourceOver="" opacityOver="1" colourOver="0" resourceDown="bt_on2_png"
