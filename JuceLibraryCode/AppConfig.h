@@ -320,5 +320,8 @@
 #ifndef  JucePlugin_AAXDisableBypass
  #define JucePlugin_AAXDisableBypass       0
 #endif
+#ifndef  JucePlugin_AAXDisableMultiMono
+ #define JucePlugin_AAXDisableMultiMono    0
+#endif
 
 #endif  // __JUCE_APPCONFIG_CD0JPL__
