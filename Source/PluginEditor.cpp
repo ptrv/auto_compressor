@@ -174,6 +174,13 @@ AutoCompressorAudioProcessorEditor::AutoCompressorAudioProcessorEditor (AutoComp
                             Image(), 1.000f, Colour (0x00000000),
                             Image(), 1.000f, Colour (0x00000000),
                             Image(), 1.000f, Colour (0x00000000));
+    addAndMakeVisible (presetBox = new ComboBox ("presetBox"));
+    presetBox->setEditableText (false);
+    presetBox->setJustificationType (Justification::centredLeft);
+    presetBox->setTextWhenNothingSelected (String::empty);
+    presetBox->setTextWhenNoChoicesAvailable (TRANS("(no choices)"));
+    presetBox->addListener (this);
+
 
     //[UserPreSize]
     using namespace std::placeholders;
@@ -221,6 +228,12 @@ AutoCompressorAudioProcessorEditor::AutoCompressorAudioProcessorEditor (AutoComp
     releaseSlider->updateText();
 
     aboutComp = new AboutComponent();
+
+    for (int i = 0; i < getProcessor()->getNumPrograms(); ++i)
+    {
+        presetBox->addItem(getProcessor()->getProgramName(i), i + 1);
+    }
+    presetBox->setSelectedId(getProcessor()->getCurrentProgram() + 1, dontSendNotification);
     //[/UserPreSize]
 
     setSize (460, 400);
@@ -263,6 +276,7 @@ AutoCompressorAudioProcessorEditor::~AutoCompressorAudioProcessorEditor()
     autoAttackButton = nullptr;
     autoReleaseButton = nullptr;
     aboutButton = nullptr;
+    presetBox = nullptr;
 
 
     //[Destructor]. You can add your own custom destruction code here..
@@ -314,13 +328,14 @@ void AutoCompressorAudioProcessorEditor::resized()
     thresholdSlider->setBounds (144, 104, 216, 20);
     label5->setBounds (12, 248, 100, 24);
     label6->setBounds (16, 104, 80, 24);
-    meterLabel->setBounds (12, 60, 150, 24);
-    imageButton->setBounds (392, 56, 52, 24);
+    meterLabel->setBounds (12, 60, 92, 24);
+    imageButton->setBounds (388, 60, 52, 24);
     autoKneeButton->setBounds (392, 172, 50, 24);
     autoGainButton->setBounds (392, 248, 50, 24);
     autoAttackButton->setBounds (392, 316, 50, 24);
     autoReleaseButton->setBounds (392, 356, 50, 24);
     aboutButton->setBounds (356, 16, 76, 20);
+    presetBox->setBounds (144, 60, 208, 20);
     //[UserResized] Add your own custom resize handling here..
     //[/UserResized]
 }
@@ -433,6 +448,32 @@ void AutoCompressorAudioProcessorEditor::buttonClicked (Button* buttonThatWasCli
     //[/UserbuttonClicked_Post]
 }
 
+void AutoCompressorAudioProcessorEditor::comboBoxChanged (ComboBox* comboBoxThatHasChanged)
+{
+    //[UsercomboBoxChanged_Pre]
+    //[/UsercomboBoxChanged_Pre]
+
+    if (comboBoxThatHasChanged == presetBox)
+    {
+        //[UserComboBoxCode_presetBox] -- add your combo box handling code here..
+        const int selectedId = presetBox->getSelectedId();
+        if (getProcessor()->getCurrentProgram() != (selectedId - 1))
+        {
+            getProcessor()->setCurrentProgram(selectedId - 1);
+        }
+        // const String& selectedName = presetBox->getItemText(selectedId);
+        // if (getProcessor()->getProgramName(getProcessor()->getCurrentProgram()).compare(selectedName) != 0)
+        // {
+        //     getProcessor()->changeProgramName(getProcessor()->getCurrentProgram(), selectedName);
+        // }
+
+        //[/UserComboBoxCode_presetBox]
+    }
+
+    //[UsercomboBoxChanged_Post]
+    //[/UsercomboBoxChanged_Post]
+}
+
 
 
 //[MiscUserCode] You can add your own definitions of your custom methods or any other code here...
@@ -474,6 +515,12 @@ void AutoCompressorAudioProcessorEditor::timerCallback()
     }
 
     meterLabel->setText(String(processor->getMeter(), 2), dontSendNotification);
+
+    const bool currentPreset = processor->getCurrentProgram();
+    if (currentPreset != presetBox->getSelectedId() - 1)
+    {
+        presetBox->setSelectedId(currentPreset+1, dontSendNotification);
+    }
 }
 
 double AutoCompressorAudioProcessorEditor::convertTextToValue(int index, const String& text)
@@ -566,12 +613,12 @@ BEGIN_JUCER_METADATA
          focusDiscardsChanges="0" fontname="Default font" fontsize="15"
          bold="0" italic="0" justification="33"/>
   <LABEL name="meterLabel" id="bde683baa9c34be7" memberName="meterLabel"
-         virtualName="" explicitFocusOrder="0" pos="12 60 150 24" edTextCol="ff000000"
+         virtualName="" explicitFocusOrder="0" pos="12 60 92 24" edTextCol="ff000000"
          edBkgCol="0" labelText="label text" editableSingleClick="0" editableDoubleClick="0"
          focusDiscardsChanges="0" fontname="Default font" fontsize="15"
          bold="0" italic="0" justification="33"/>
   <IMAGEBUTTON name="new button" id="a12c78ba715400e7" memberName="imageButton"
-               virtualName="" explicitFocusOrder="0" pos="392 56 52 24" buttonText="new button"
+               virtualName="" explicitFocusOrder="0" pos="388 60 52 24" buttonText="new button"
                connectedEdges="0" needsCallback="1" radioGroupId="0" keepProportions="1"
                resourceNormal="bt_off_png" opacityNormal="1" colourNormal="0"
                resourceOver="" opacityOver="1" colourOver="0" resourceDown="bt_on_png"
@@ -606,6 +653,9 @@ BEGIN_JUCER_METADATA
                resourceNormal="" opacityNormal="1" colourNormal="0" resourceOver=""
                opacityOver="1" colourOver="0" resourceDown="" opacityDown="1"
                colourDown="0"/>
+  <COMBOBOX name="presetBox" id="2afad6bbbce571cd" memberName="presetBox"
+            virtualName="" explicitFocusOrder="0" pos="144 60 208 20" editable="0"
+            layout="33" items="" textWhenNonSelected="" textWhenNoItems="(no choices)"/>
 </JUCER_COMPONENT>
 
 END_JUCER_METADATA

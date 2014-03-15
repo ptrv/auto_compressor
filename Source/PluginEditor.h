@@ -39,7 +39,8 @@ class AboutComponent;
 class AutoCompressorAudioProcessorEditor  : public AudioProcessorEditor,
                                             public Timer,
                                             public SliderListener,
-                                            public ButtonListener
+                                            public ButtonListener,
+                                            public ComboBoxListener
 {
 public:
     //==============================================================================
@@ -55,6 +56,7 @@ public:
     void resized();
     void sliderValueChanged (Slider* sliderThatWasMoved);
     void buttonClicked (Button* buttonThatWasClicked);
+    void comboBoxChanged (ComboBox* comboBoxThatHasChanged);
 
     // Binary resources:
     static const char* bt_off_png;
@@ -103,6 +105,7 @@ private:
     ScopedPointer<ImageButton> autoAttackButton;
     ScopedPointer<ImageButton> autoReleaseButton;
     ScopedPointer<ImageButton> aboutButton;
+    ScopedPointer<ComboBox> presetBox;
 
 
     //==============================================================================

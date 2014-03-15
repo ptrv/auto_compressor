@@ -28,11 +28,32 @@ const float defaultMetaNoClipping =  1.f;
 
 //==============================================================================
 AutoCompressorAudioProcessor::AutoCompressorAudioProcessor()
+    : currentPreset(0)
 {
-    for (int i = 0; i < numAllParams; ++i)
+    const int CONST_NUM_PRESETS = 2;
+    String presetNames[] = {"Default", "Manual"};
+
+    using namespace std::placeholders;
+    typedef std::function<float(int)> tDefaultValueFn;
+    tDefaultValueFn defaultFuncs[] = {
+        std::bind(&AutoCompressorAudioProcessor::getParameterDefaultValue, this, _1),
+        std::bind(&AutoCompressorAudioProcessor::getParameterDefaultValueManual, this, _1)
+    };
+
+    for (int i = 0; i < CONST_NUM_PRESETS; ++i)
     {
-        setParameter(i, getParameterDefaultValue(i));
+        Preset preset;
+        preset.name = presetNames[i];
+        presets.add(preset);
+        setCurrentProgram(i);
+
+        for (int j = 0; j < numAllParams; ++j)
+        {
+            setParameter(j, defaultFuncs[i](j));
+        }
     }
+
+    setCurrentProgram(0);
 }
 
 AutoCompressorAudioProcessor::~AutoCompressorAudioProcessor()
@@ -54,7 +75,7 @@ int AutoCompressorAudioProcessor::getNumParameters()
 
 float AutoCompressorAudioProcessor::getParameter (int index)
 {
-    return params[index];
+    return presets[getCurrentProgram()].params[index];
 }
 
 float AutoCompressorAudioProcessor::getParameterDefaultValue(int index)
@@ -83,6 +104,19 @@ float AutoCompressorAudioProcessor::getParameterDefaultValue(int index)
     return 0.f;
 }
 
+float AutoCompressorAudioProcessor::getParameterDefaultValueManual(int index)
+{
+    switch(index) {
+    case autoAttackParam:
+    case autoReleaseParam:
+    case autoKneeParam:
+    case autoGainParam:
+        return 0.f;
+    default:
+        return getParameterDefaultValue(index);
+    }
+}
+
 float AutoCompressorAudioProcessor::getParameterFromString(int index, const String& text)
 {
     double x = text.getDoubleValue();
@@ -100,7 +134,9 @@ float AutoCompressorAudioProcessor::getParameterFromString(int index, const Stri
 
 void AutoCompressorAudioProcessor::setParameter (int index, float newValue)
 {
-    params[index] = newValue;
+    // params[index] = newValue;
+    Preset* presetsRaw = presets.getRawDataPointer();
+    presetsRaw[getCurrentProgram()].params[index] = newValue;
     double fs = getSampleRate();
 
     switch(index) {
@@ -307,25 +343,30 @@ double AutoCompressorAudioProcessor::getTailLengthSeconds() const
 
 int AutoCompressorAudioProcessor::getNumPrograms()
 {
-    return 0;
+    return presets.size();
 }
 
 int AutoCompressorAudioProcessor::getCurrentProgram()
 {
-    return 0;
+    return currentPreset;
 }
 
 void AutoCompressorAudioProcessor::setCurrentProgram (int index)
 {
+    currentPreset = jlimit(0, getNumPrograms(), index);
 }
 
 const String AutoCompressorAudioProcessor::getProgramName (int index)
 {
-    return "Default";
+    return presets[index].name;
 }
 
 void AutoCompressorAudioProcessor::changeProgramName (int index, const String& newName)
 {
+    if (index != 0 && index < presets.size())
+    {
+        presets[index].name = newName;
+    }
 }
 
 //==============================================================================
@@ -518,29 +559,55 @@ AudioProcessorEditor* AutoCompressorAudioProcessor::createEditor()
 //==============================================================================
 void AutoCompressorAudioProcessor::getStateInformation (MemoryBlock& destData)
 {
+
     XmlElement xml("PTRVAUTOCOMPRESSORSETTINGS");
 
-    for (int i = 0; i < numAllParams; ++i)
-    {
-        xml.setAttribute(getParameterName(i), getParameter(i));
-    }
+    const int currProg = getCurrentProgram();
 
+    xml.setAttribute("CURRENTPRESET", currProg);
+
+    for (int i = 0; i < getNumPrograms(); ++i)
+    {
+        setCurrentProgram(i);
+        XmlElement* xmlPreset = new XmlElement("PRESET");
+        xmlPreset->setAttribute("NAME", getProgramName(i));
+        for (int j = 0; j < numAllParams; ++j)
+        {
+            xmlPreset->setAttribute(getParameterName(j), getParameter(j));
+        }
+        xml.addChildElement(xmlPreset);
+    }
+    setCurrentProgram(currProg);
     copyXmlToBinary(xml, destData);
+
 }
 
 void AutoCompressorAudioProcessor::setStateInformation (const void* data, int sizeInBytes)
 {
     ScopedPointer<XmlElement> xmlState(getXmlFromBinary(data, sizeInBytes));
 
-    if (xmlState != nullptr && xmlState->hasTagName("PTRVAUTOCOMPRESSORSETTINGS"))
+    if (xmlState != nullptr && xmlState->hasTagName("PTRVAUTOCOMPRESSORSETTINGS")
+        && xmlState->hasAttribute("CURRENTPRESET"))
     {
-        for (int i = 0; i < numAllParams; ++i)
+        int currentProgram = xmlState->getIntAttribute("CURRENTPRESET");
+        presets.clear();
+
+        int presetIdx = 0;
+        forEachXmlChildElementWithTagName(*xmlState.get(), xmlPreset, "PRESET")
         {
-            const float paramValue =
-                (float) xmlState->getDoubleAttribute(getParameterName(i),
-                                                     getParameter(i));
-            setParameter(i, paramValue);
+            Preset preset;
+            preset.name = xmlPreset->getStringAttribute("NAME");
+            presets.add(preset);
+            setCurrentProgram(presetIdx++);
+            for (int i = 0; i < numAllParams; ++i)
+            {
+                const float paramValue =
+                    (float) xmlPreset->getDoubleAttribute(getParameterName(i),
+                                                          getParameter(i));
+                setParameter(i, paramValue);
+            }
         }
+        setCurrentProgram(currentProgram);
     }
 }
 

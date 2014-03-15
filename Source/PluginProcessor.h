@@ -92,6 +92,7 @@ public:
 
     float getParameter (int index);
     float getParameterDefaultValue(int index);
+    float getParameterDefaultValueManual(int index);
     float getParameterFromString(int index, const String& text);
 
     void setParameter (int index, float newValue);
@@ -154,7 +155,14 @@ private:
 
     double processSidechain(float inAbs);
 
-    float params[numAllParams];
+    struct Preset
+    {
+        String name;
+        float params[numAllParams];
+    };
+    Array<Preset> presets;
+
+    int currentPreset;
 
     double rampCoeff;
 
