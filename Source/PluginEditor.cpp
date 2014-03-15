@@ -22,6 +22,7 @@
 
 #include "PluginProcessor.h"
 #include "ParamSlider.h"
+#include "AboutComponent.h"
 //[/Headers]
 
 #include "PluginEditor.h"
@@ -165,6 +166,14 @@ AutoCompressorAudioProcessorEditor::AutoCompressorAudioProcessorEditor (AutoComp
                                   ImageCache::getFromMemory (bt_off2_png, bt_off2_pngSize), 1.000f, Colour (0x00000000),
                                   Image(), 1.000f, Colour (0x00000000),
                                   ImageCache::getFromMemory (bt_on2_png, bt_on2_pngSize), 1.000f, Colour (0x00000000));
+    addAndMakeVisible (aboutButton = new ImageButton ("aboutButton"));
+    aboutButton->setButtonText (String::empty);
+    aboutButton->addListener (this);
+
+    aboutButton->setImages (false, true, true,
+                            Image(), 1.000f, Colour (0x00000000),
+                            Image(), 1.000f, Colour (0x00000000),
+                            Image(), 1.000f, Colour (0x00000000));
 
     //[UserPreSize]
     using namespace std::placeholders;
@@ -211,6 +220,7 @@ AutoCompressorAudioProcessorEditor::AutoCompressorAudioProcessorEditor (AutoComp
                                                ACProc::releaseParam, _1));
     releaseSlider->updateText();
 
+    aboutComp = new AboutComponent();
     //[/UserPreSize]
 
     setSize (460, 400);
@@ -252,9 +262,11 @@ AutoCompressorAudioProcessorEditor::~AutoCompressorAudioProcessorEditor()
     autoGainButton = nullptr;
     autoAttackButton = nullptr;
     autoReleaseButton = nullptr;
+    aboutButton = nullptr;
 
 
     //[Destructor]. You can add your own custom destruction code here..
+    aboutComp = nullptr;
     //[/Destructor]
 }
 
@@ -308,6 +320,7 @@ void AutoCompressorAudioProcessorEditor::resized()
     autoGainButton->setBounds (392, 248, 50, 24);
     autoAttackButton->setBounds (392, 316, 50, 24);
     autoReleaseButton->setBounds (392, 356, 50, 24);
+    aboutButton->setBounds (356, 16, 76, 20);
     //[UserResized] Add your own custom resize handling here..
     //[/UserResized]
 }
@@ -408,6 +421,12 @@ void AutoCompressorAudioProcessorEditor::buttonClicked (Button* buttonThatWasCli
         getProcessor()->setParameterNotifyingHost(ACProc::autoReleaseParam,
                                                   autoReleaseActive ? 1.f : 0.f);
         //[/UserButtonCode_autoReleaseButton]
+    }
+    else if (buttonThatWasClicked == aboutButton)
+    {
+        //[UserButtonCode_aboutButton] -- add your button handler code here..
+        DialogWindow::showModalDialog("About", aboutComp, this, Colours::black, true);
+        //[/UserButtonCode_aboutButton]
     }
 
     //[UserbuttonClicked_Post]
@@ -581,6 +600,12 @@ BEGIN_JUCER_METADATA
                resourceNormal="bt_off2_png" opacityNormal="1" colourNormal="0"
                resourceOver="" opacityOver="1" colourOver="0" resourceDown="bt_on2_png"
                opacityDown="1" colourDown="0"/>
+  <IMAGEBUTTON name="aboutButton" id="82925c62ef6980b6" memberName="aboutButton"
+               virtualName="" explicitFocusOrder="0" pos="356 16 76 20" buttonText=""
+               connectedEdges="0" needsCallback="1" radioGroupId="0" keepProportions="1"
+               resourceNormal="" opacityNormal="1" colourNormal="0" resourceOver=""
+               opacityOver="1" colourOver="0" resourceDown="" opacityDown="1"
+               colourDown="0"/>
 </JUCER_COMPONENT>
 
 END_JUCER_METADATA

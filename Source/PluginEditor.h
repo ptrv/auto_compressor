@@ -22,7 +22,8 @@
 
 //[Headers]     -- You can add your own extra header files here --
 #include "../JuceLibraryCode/JuceHeader.h"
-#include "ParamSlider.h"
+class ParamSlider;
+class AboutComponent;
 //[/Headers]
 
 
@@ -79,6 +80,7 @@ private:
     double convertTextToValue(int index, const String& text);
     String convertValueToText(int index, double value);
 
+    ScopedPointer<AboutComponent> aboutComp;
     //[/UserVariables]
 
     //==============================================================================
@@ -100,6 +102,7 @@ private:
     ScopedPointer<ImageButton> autoGainButton;
     ScopedPointer<ImageButton> autoAttackButton;
     ScopedPointer<ImageButton> autoReleaseButton;
+    ScopedPointer<ImageButton> aboutButton;
 
 
     //==============================================================================

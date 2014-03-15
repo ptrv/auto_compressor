@@ -51,6 +51,7 @@ ifeq ($(CONFIG),Release)
 endif
 
 OBJECTS := \
+  $(OBJDIR)/AboutComponent_ebbe5b79.o \
   $(OBJDIR)/ParamSlider_4125232f.o \
   $(OBJDIR)/PluginEditor_94d4fb09.o \
   $(OBJDIR)/PluginProcessor_a059e380.o \
@@ -87,6 +88,11 @@ clean:
 strip:
 	@echo Stripping AutoCompressor
 	-@strip --strip-unneeded $(OUTDIR)/$(TARGET)
+
+$(OBJDIR)/AboutComponent_ebbe5b79.o: ../../Source/AboutComponent.cpp
+	-@mkdir -p $(OBJDIR)
+	@echo "Compiling AboutComponent.cpp"
+	@$(CXX) $(CXXFLAGS) -o "$@" -c "$<"
 
 $(OBJDIR)/ParamSlider_4125232f.o: ../../Source/ParamSlider.cpp
 	-@mkdir -p $(OBJDIR)
