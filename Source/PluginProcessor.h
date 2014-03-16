@@ -80,6 +80,7 @@ public:
     void processBlock (AudioSampleBuffer& buffer, MidiBuffer& midiMessages);
 
     float getMeter();
+    String getMeterText();
 
     //==============================================================================
     AudioProcessorEditor* createEditor();

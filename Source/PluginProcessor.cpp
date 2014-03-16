@@ -542,6 +542,11 @@ float AutoCompressorAudioProcessor::getMeter()
     return 1.f;
 
 }
+
+String AutoCompressorAudioProcessor::getMeterText()
+{
+    return db2str(getMeter());
+}
 //==============================================================================
 bool AutoCompressorAudioProcessor::hasEditor() const
 {
