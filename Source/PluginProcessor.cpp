@@ -565,18 +565,12 @@ void AutoCompressorAudioProcessor::getStateInformation (MemoryBlock& destData)
 
     for (int i = 0; i < getNumPrograms(); ++i)
     {
-        setCurrentProgram(i);
-        XmlElement* xmlPreset = new XmlElement("PRESET");
-        xmlPreset->setAttribute("NAME", getProgramName(i));
-        for (int j = 0; j < numAllParams; ++j)
-        {
-            xmlPreset->setAttribute(getParameterName(j), getParameter(j));
-        }
+        XmlElement* xmlPreset = writePreset(i);
         xml.addChildElement(xmlPreset);
     }
-    setCurrentProgram(currProg);
     copyXmlToBinary(xml, destData);
 
+    setCurrentProgram(currProg);
 }
 
 void AutoCompressorAudioProcessor::setStateInformation (const void* data, int sizeInBytes)
@@ -592,20 +586,38 @@ void AutoCompressorAudioProcessor::setStateInformation (const void* data, int si
         int presetIdx = 0;
         forEachXmlChildElementWithTagName(*xmlState.get(), xmlPreset, "PRESET")
         {
-            Preset preset;
-            preset.name = xmlPreset->getStringAttribute("NAME");
-            presets.add(preset);
-            setCurrentProgram(presetIdx++);
-            for (int i = 0; i < numAllParams; ++i)
-            {
-                const float paramValue =
-                    (float) xmlPreset->getDoubleAttribute(getParameterName(i),
-                                                          getParameter(i));
-                setParameter(i, paramValue);
-            }
+            loadPreset(*xmlPreset, presetIdx++);
         }
         setCurrentProgram(currentProgram);
     }
+}
+
+void AutoCompressorAudioProcessor::loadPreset(const XmlElement& xmlPreset, int index)
+{
+    Preset preset;
+    preset.name = xmlPreset.getStringAttribute("NAME");
+    presets.insert(index, preset);
+
+    setCurrentProgram(index);
+    for (int i = 0; i < numAllParams; ++i)
+    {
+        const float paramValue =
+            (float) xmlPreset.getDoubleAttribute(getParameterName(i),
+                                                 getParameter(i));
+        setParameter(i, paramValue);
+    }
+}
+
+XmlElement* AutoCompressorAudioProcessor::writePreset(int index)
+{
+    setCurrentProgram(index);
+    XmlElement* xmlPreset = new XmlElement("PRESET");
+    xmlPreset->setAttribute("NAME", getProgramName(index));
+    for (int i = 0; i < numAllParams; ++i)
+    {
+        xmlPreset->setAttribute(getParameterName(i), getParameter(i));
+    }
+    return xmlPreset;
 }
 
 void AutoCompressorAudioProcessor::setParameters()

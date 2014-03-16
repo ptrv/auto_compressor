@@ -122,6 +122,8 @@ public:
     void getStateInformation (MemoryBlock& destData);
     void setStateInformation (const void* data, int sizeInBytes);
 
+    void loadPreset(const XmlElement& xmlPreset, int index);
+    XmlElement* writePreset(int index);
 
     void setParameters();
 
