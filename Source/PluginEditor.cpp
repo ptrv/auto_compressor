@@ -85,13 +85,13 @@ AutoCompressorAudioProcessorEditor::AutoCompressorAudioProcessorEditor (AutoComp
     label6->setColour (TextEditor::textColourId, Colours::black);
     label6->setColour (TextEditor::backgroundColourId, Colour (0x00000000));
 
-    addAndMakeVisible (meterLabel = new Label ("meterLabel",
-                                               TRANS("label text")));
-    meterLabel->setFont (Font (15.00f, Font::plain));
-    meterLabel->setJustificationType (Justification::centredLeft);
-    meterLabel->setEditable (false, false, false);
-    meterLabel->setColour (TextEditor::textColourId, Colours::black);
-    meterLabel->setColour (TextEditor::backgroundColourId, Colour (0x00000000));
+    addAndMakeVisible (meterValueLabel = new Label ("meterValueLabel",
+                                                    TRANS("0.0")));
+    meterValueLabel->setFont (Font (15.00f, Font::plain));
+    meterValueLabel->setJustificationType (Justification::centredLeft);
+    meterValueLabel->setEditable (false, false, false);
+    meterValueLabel->setColour (TextEditor::textColourId, Colours::black);
+    meterValueLabel->setColour (TextEditor::backgroundColourId, Colour (0x00000000));
 
     addAndMakeVisible (aboutButton = new ImageButton ("aboutButton"));
     aboutButton->setButtonText (String::empty);
@@ -171,7 +171,7 @@ AutoCompressorAudioProcessorEditor::~AutoCompressorAudioProcessorEditor()
     label4 = nullptr;
     label5 = nullptr;
     label6 = nullptr;
-    meterLabel = nullptr;
+    meterValueLabel = nullptr;
     aboutButton = nullptr;
     presetBox = nullptr;
     thresholdSlider = nullptr;
@@ -199,13 +199,13 @@ void AutoCompressorAudioProcessorEditor::paint (Graphics& g)
 
     g.fillAll (Colour (0xff393939));
 
-    g.setColour (Colour (0xff355c2e));
-    g.fillRoundedRectangle (0.0f, 0.0f, 460.0f, 48.0f, 10.000f);
+    g.setColour (Colour (0xff5c5c5c));
+    g.fillRoundedRectangle (2.0f, 2.0f, 456.0f, 44.0f, 12.000f);
 
     g.setColour (Colours::black);
     g.setFont (Font (28.00f, Font::plain));
     g.drawText (TRANS("auto_compressor"),
-                8, 8, 208, 30,
+                12, 8, 208, 30,
                 Justification::centredLeft, true);
 
     g.setColour (Colours::black);
@@ -214,8 +214,8 @@ void AutoCompressorAudioProcessorEditor::paint (Graphics& g)
                 354, 8, 80, 30,
                 Justification::centredRight, true);
 
-    g.setColour (Colour (0xff5e6c61));
-    g.fillRoundedRectangle (0.0f, 48.0f, 460.0f, 352.0f, 10.000f);
+    g.setColour (Colour (0xff909090));
+    g.fillRoundedRectangle (2.0f, 48.0f, 456.0f, 350.0f, 12.000f);
 
     //[UserPaint] Add your own custom painting code here..
     //[/UserPaint]
@@ -224,13 +224,13 @@ void AutoCompressorAudioProcessorEditor::paint (Graphics& g)
 void AutoCompressorAudioProcessorEditor::resized()
 {
     ratioSlider->setBounds (144, 148, 212, 32);
-    label->setBounds (12, 152, 120, 24);
-    label2->setBounds (12, 192, 80, 24);
+    label->setBounds (16, 152, 120, 24);
+    label2->setBounds (16, 192, 80, 24);
     label3->setBounds (16, 312, 80, 24);
     label4->setBounds (16, 360, 94, 24);
-    label5->setBounds (12, 248, 100, 24);
+    label5->setBounds (16, 248, 100, 24);
     label6->setBounds (16, 104, 80, 24);
-    meterLabel->setBounds (12, 60, 92, 24);
+    meterValueLabel->setBounds (16, 60, 72, 24);
     aboutButton->setBounds (356, 16, 76, 20);
     presetBox->setBounds (144, 60, 208, 20);
     thresholdSlider->setBounds (144, 100, 212, 32);
@@ -339,7 +339,7 @@ void AutoCompressorAudioProcessorEditor::updateWidgets(const NotificationType no
         autoReleaseButton->setToggleState(autoReleaseActive, notification);
     }
 
-    meterLabel->setText(String(processor->getMeter(), 2), notification);
+    meterValueLabel->setText(String(processor->getMeter(), 2), notification);
 
     const bool currentPreset = processor->getCurrentProgram();
     if (currentPreset != presetBox->getSelectedId() - 1)
@@ -367,23 +367,23 @@ BEGIN_JUCER_METADATA
                  snapActive="1" snapShown="1" overlayOpacity="0.330" fixedSize="1"
                  initialWidth="460" initialHeight="400">
   <BACKGROUND backgroundColour="ff393939">
-    <ROUNDRECT pos="0 0 460 48" cornerSize="10" fill="solid: ff355c2e" hasStroke="0"/>
-    <TEXT pos="8 8 208 30" fill="solid: ff000000" hasStroke="0" text="auto_compressor"
+    <ROUNDRECT pos="2 2 456 44" cornerSize="12" fill="solid: ff5c5c5c" hasStroke="0"/>
+    <TEXT pos="12 8 208 30" fill="solid: ff000000" hasStroke="0" text="auto_compressor"
           fontname="Default font" fontsize="28" bold="0" italic="0" justification="33"/>
     <TEXT pos="354 8 80 30" fill="solid: ff000000" hasStroke="0" text="ptrv.org"
           fontname="Default font" fontsize="24" bold="0" italic="0" justification="34"/>
-    <ROUNDRECT pos="0 48 460 352" cornerSize="10" fill="solid: ff5e6c61" hasStroke="0"/>
+    <ROUNDRECT pos="2 48 456 350" cornerSize="12" fill="solid: ff909090" hasStroke="0"/>
   </BACKGROUND>
   <GENERICCOMPONENT name="ratioSlider" id="e051fdb064a119b2" memberName="ratioSlider"
                     virtualName="" explicitFocusOrder="0" pos="144 148 212 32" class="ParamSlider"
                     params="*getProcessor(), ACProc::ratioParam"/>
   <LABEL name="new label" id="28411f247b38ffe2" memberName="label" virtualName=""
-         explicitFocusOrder="0" pos="12 152 120 24" edTextCol="ff000000"
+         explicitFocusOrder="0" pos="16 152 120 24" edTextCol="ff000000"
          edBkgCol="0" labelText="compression ratio" editableSingleClick="0"
          editableDoubleClick="0" focusDiscardsChanges="0" fontname="Default font"
          fontsize="15" bold="0" italic="0" justification="33"/>
   <LABEL name="new label" id="dc3bfe5fa125e797" memberName="label2" virtualName=""
-         explicitFocusOrder="0" pos="12 192 80 24" edTextCol="ff000000"
+         explicitFocusOrder="0" pos="16 192 80 24" edTextCol="ff000000"
          edBkgCol="0" labelText="knee width" editableSingleClick="0" editableDoubleClick="0"
          focusDiscardsChanges="0" fontname="Default font" fontsize="15"
          bold="0" italic="0" justification="33"/>
@@ -398,7 +398,7 @@ BEGIN_JUCER_METADATA
          editableDoubleClick="0" focusDiscardsChanges="0" fontname="Default font"
          fontsize="15" bold="0" italic="0" justification="33"/>
   <LABEL name="new label" id="2c2c65be9dad5998" memberName="label5" virtualName=""
-         explicitFocusOrder="0" pos="12 248 100 24" edTextCol="ff000000"
+         explicitFocusOrder="0" pos="16 248 100 24" edTextCol="ff000000"
          edBkgCol="0" labelText="make-up gain" editableSingleClick="0"
          editableDoubleClick="0" focusDiscardsChanges="0" fontname="Default font"
          fontsize="15" bold="0" italic="0" justification="33"/>
@@ -407,9 +407,9 @@ BEGIN_JUCER_METADATA
          edBkgCol="0" labelText="threshold" editableSingleClick="0" editableDoubleClick="0"
          focusDiscardsChanges="0" fontname="Default font" fontsize="15"
          bold="0" italic="0" justification="33"/>
-  <LABEL name="meterLabel" id="bde683baa9c34be7" memberName="meterLabel"
-         virtualName="" explicitFocusOrder="0" pos="12 60 92 24" edTextCol="ff000000"
-         edBkgCol="0" labelText="label text" editableSingleClick="0" editableDoubleClick="0"
+  <LABEL name="meterValueLabel" id="bde683baa9c34be7" memberName="meterValueLabel"
+         virtualName="" explicitFocusOrder="0" pos="16 60 72 24" edTextCol="ff000000"
+         edBkgCol="0" labelText="0.0" editableSingleClick="0" editableDoubleClick="0"
          focusDiscardsChanges="0" fontname="Default font" fontsize="15"
          bold="0" italic="0" justification="33"/>
   <IMAGEBUTTON name="aboutButton" id="82925c62ef6980b6" memberName="aboutButton"

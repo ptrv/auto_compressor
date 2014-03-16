@@ -82,7 +82,7 @@ private:
     ScopedPointer<Label> label4;
     ScopedPointer<Label> label5;
     ScopedPointer<Label> label6;
-    ScopedPointer<Label> meterLabel;
+    ScopedPointer<Label> meterValueLabel;
     ScopedPointer<ImageButton> aboutButton;
     ScopedPointer<ComboBox> presetBox;
     ScopedPointer<ParamSlider> thresholdSlider;
