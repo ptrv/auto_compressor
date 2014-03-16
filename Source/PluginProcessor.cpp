@@ -364,10 +364,7 @@ const String AutoCompressorAudioProcessor::getProgramName (int index)
 
 void AutoCompressorAudioProcessor::changeProgramName (int index, const String& newName)
 {
-    if (index != 0 && index < presets.size())
-    {
-        presets[index].name = newName;
-    }
+    presets.getRawDataPointer()[index].name = newName;
 }
 
 //==============================================================================
