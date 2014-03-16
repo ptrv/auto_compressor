@@ -124,6 +124,8 @@ public:
 
     void initialize();
 
+    void setParameters();
+
     enum Parameters
     {
         activeParam,

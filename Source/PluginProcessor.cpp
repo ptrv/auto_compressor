@@ -354,6 +354,7 @@ int AutoCompressorAudioProcessor::getCurrentProgram()
 void AutoCompressorAudioProcessor::setCurrentProgram (int index)
 {
     currentPreset = jlimit(0, getNumPrograms(), index);
+    setParameters();
 }
 
 const String AutoCompressorAudioProcessor::getProgramName (int index)
@@ -611,6 +612,13 @@ void AutoCompressorAudioProcessor::setStateInformation (const void* data, int si
     }
 }
 
+void AutoCompressorAudioProcessor::setParameters()
+{
+    for (int i = 0; i < numAllParams; ++i)
+    {
+        setParameter(i, getParameter(i));
+    }
+}
 //==============================================================================
 // This creates new instances of the plugin..
 AudioProcessor* JUCE_CALLTYPE createPluginFilter()
