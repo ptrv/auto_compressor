@@ -373,6 +373,8 @@ void AutoCompressorAudioProcessor::changeProgramName (int index, const String& n
 //==============================================================================
 void AutoCompressorAudioProcessor::prepareToPlay (double sampleRate, int samplesPerBlock)
 {
+    rampCoeff = onePoleCoeff(sampleRate, 0.05);
+
     crestRms = crestPeak = MINVAL;
     cvSmooth = cvAttack = cvRelease = 0.0;
     logThreshold[kCurrent] = logThreshold[kTarget];
@@ -388,9 +390,6 @@ void AutoCompressorAudioProcessor::releaseResources()
 void AutoCompressorAudioProcessor::processBlock (AudioSampleBuffer& buffer, MidiBuffer& midiMessages)
 {
     int numSamples = buffer.getNumSamples();
-
-    const double fs = getSampleRate();
-    rampCoeff = onePoleCoeff(fs, 0.05);
 
     if (buffer.getNumChannels() >= 2)
     {

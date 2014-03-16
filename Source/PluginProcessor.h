@@ -122,7 +122,6 @@ public:
     void getStateInformation (MemoryBlock& destData);
     void setStateInformation (const void* data, int sizeInBytes);
 
-    void initialize();
 
     void setParameters();
 
