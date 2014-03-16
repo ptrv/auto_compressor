@@ -3,7 +3,7 @@
 
     ParamSlider.h
     Created: 23 Feb 2014 2:28:22pm
-    Author:  peter
+    Author:  Peter Vasil
 
   ==============================================================================
 */
@@ -12,25 +12,47 @@
 #define PARAMSLIDER_H_INCLUDED
 
 #include "../JuceLibraryCode/JuceHeader.h"
-#include <functional>
+#include "PluginProcessor.h"
 
 class ParamSlider : public Slider
 {
 public:
-    ParamSlider(const String& name);
+    ParamSlider(AutoCompressorAudioProcessor& p,
+                const AutoCompressorAudioProcessor::Parameters index_)
+        : owner(p)
+        , index(index_)
+    {
+        setRange(0.0, 1.0, 0.0);
+        setSliderStyle(Slider::LinearHorizontal);
+        setTextBoxStyle(Slider::TextBoxLeft, false, 80, 20);
+        setTextValueSuffix(owner.getParameterLabel(index));
+    }
 
-    virtual double getValueFromText(const String& text);
-    virtual String getTextFromValue(double value);
+    void valueChanged()
+    {
+        const float newValue = (float) getValue();
 
-    typedef std::function<double(const String&)> tFnTextToValue;
-    typedef std::function<String(double)> tFnValueToText;
+        if (owner.getParameter(index) != newValue)
+        {
+            owner.setParameterNotifyingHost(index, newValue);
+        }
+    }
 
-    void setTextToValueConverter(const tFnTextToValue& fnTextToValue);
-    void setValueToTextConverter(const tFnValueToText& fnValueToText);
+    double getValueFromText(const String& text)
+    {
+        return owner.getParameterFromString(index, text);
+    }
+
+    String getTextFromValue(double /*value*/)
+    {
+        return owner.getParameterText(index) + " " + getTextValueSuffix();
+    }
 
 private:
-    tFnTextToValue textToValueConverter;
-    tFnValueToText valueToTextConverter;
+    AutoCompressorAudioProcessor& owner;
+    const int index;
+
+    JUCE_DECLARE_NON_COPYABLE_WITH_LEAK_DETECTOR (ParamSlider)
 };
 
 

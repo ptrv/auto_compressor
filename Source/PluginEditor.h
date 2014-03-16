@@ -22,6 +22,7 @@
 
 //[Headers]     -- You can add your own extra header files here --
 #include "../JuceLibraryCode/JuceHeader.h"
+class ParamButton;
 class ParamSlider;
 class AboutComponent;
 //[/Headers]
@@ -38,7 +39,6 @@ class AboutComponent;
 */
 class AutoCompressorAudioProcessorEditor  : public AudioProcessorEditor,
                                             public Timer,
-                                            public SliderListener,
                                             public ButtonListener,
                                             public ComboBoxListener
 {
@@ -54,19 +54,9 @@ public:
 
     void paint (Graphics& g);
     void resized();
-    void sliderValueChanged (Slider* sliderThatWasMoved);
     void buttonClicked (Button* buttonThatWasClicked);
     void comboBoxChanged (ComboBox* comboBoxThatHasChanged);
 
-    // Binary resources:
-    static const char* bt_off_png;
-    static const int bt_off_pngSize;
-    static const char* bt_on_png;
-    static const int bt_on_pngSize;
-    static const char* bt_off2_png;
-    static const int bt_off2_pngSize;
-    static const char* bt_on2_png;
-    static const int bt_on2_pngSize;
 
 
 private:
@@ -79,33 +69,32 @@ private:
         return static_cast<AutoCompressorAudioProcessor*>(getAudioProcessor());
     }
 
-    double convertTextToValue(int index, const String& text);
-    String convertValueToText(int index, double value);
+    void updateWidgets(const NotificationType notification);
 
     ScopedPointer<AboutComponent> aboutComp;
     //[/UserVariables]
 
     //==============================================================================
     ScopedPointer<ParamSlider> ratioSlider;
-    ScopedPointer<ParamSlider> kneeWidthSlider;
     ScopedPointer<Label> label;
     ScopedPointer<Label> label2;
-    ScopedPointer<ParamSlider> attackSlider;
-    ScopedPointer<ParamSlider> releaseSlider;
     ScopedPointer<Label> label3;
     ScopedPointer<Label> label4;
-    ScopedPointer<ParamSlider> gainSlider;
-    ScopedPointer<ParamSlider> thresholdSlider;
     ScopedPointer<Label> label5;
     ScopedPointer<Label> label6;
     ScopedPointer<Label> meterLabel;
-    ScopedPointer<ImageButton> imageButton;
-    ScopedPointer<ImageButton> autoKneeButton;
-    ScopedPointer<ImageButton> autoGainButton;
-    ScopedPointer<ImageButton> autoAttackButton;
-    ScopedPointer<ImageButton> autoReleaseButton;
     ScopedPointer<ImageButton> aboutButton;
     ScopedPointer<ComboBox> presetBox;
+    ScopedPointer<ParamSlider> thresholdSlider;
+    ScopedPointer<ParamSlider> kneeWidthSlider;
+    ScopedPointer<ParamSlider> gainSlider;
+    ScopedPointer<ParamSlider> attackSlider;
+    ScopedPointer<ParamSlider> releaseSlider;
+    ScopedPointer<ParamButton> activeButton;
+    ScopedPointer<ParamButton> autoKneeButton;
+    ScopedPointer<ParamButton> autoGainButton;
+    ScopedPointer<ParamButton> autoAttackButton;
+    ScopedPointer<ParamButton> autoReleaseButton;
 
 
     //==============================================================================

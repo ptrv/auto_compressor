@@ -52,9 +52,9 @@ endif
 
 OBJECTS := \
   $(OBJDIR)/AboutComponent_ebbe5b79.o \
-  $(OBJDIR)/ParamSlider_4125232f.o \
   $(OBJDIR)/PluginEditor_94d4fb09.o \
   $(OBJDIR)/PluginProcessor_a059e380.o \
+  $(OBJDIR)/BinaryData_ce4232d4.o \
   $(OBJDIR)/juce_audio_basics_ad2ec31c.o \
   $(OBJDIR)/juce_audio_devices_a235c0da.o \
   $(OBJDIR)/juce_audio_formats_d0b70a7a.o \
@@ -94,11 +94,6 @@ $(OBJDIR)/AboutComponent_ebbe5b79.o: ../../Source/AboutComponent.cpp
 	@echo "Compiling AboutComponent.cpp"
 	@$(CXX) $(CXXFLAGS) -o "$@" -c "$<"
 
-$(OBJDIR)/ParamSlider_4125232f.o: ../../Source/ParamSlider.cpp
-	-@mkdir -p $(OBJDIR)
-	@echo "Compiling ParamSlider.cpp"
-	@$(CXX) $(CXXFLAGS) -o "$@" -c "$<"
-
 $(OBJDIR)/PluginEditor_94d4fb09.o: ../../Source/PluginEditor.cpp
 	-@mkdir -p $(OBJDIR)
 	@echo "Compiling PluginEditor.cpp"
@@ -107,6 +102,11 @@ $(OBJDIR)/PluginEditor_94d4fb09.o: ../../Source/PluginEditor.cpp
 $(OBJDIR)/PluginProcessor_a059e380.o: ../../Source/PluginProcessor.cpp
 	-@mkdir -p $(OBJDIR)
 	@echo "Compiling PluginProcessor.cpp"
+	@$(CXX) $(CXXFLAGS) -o "$@" -c "$<"
+
+$(OBJDIR)/BinaryData_ce4232d4.o: ../../JuceLibraryCode/BinaryData.cpp
+	-@mkdir -p $(OBJDIR)
+	@echo "Compiling BinaryData.cpp"
 	@$(CXX) $(CXXFLAGS) -o "$@" -c "$<"
 
 $(OBJDIR)/juce_audio_basics_ad2ec31c.o: ../../juce/modules/juce_audio_basics/juce_audio_basics.cpp
