@@ -33,11 +33,10 @@ AutoCompressorAudioProcessor::AutoCompressorAudioProcessor()
     const int CONST_NUM_PRESETS = 2;
     String presetNames[] = {"Default", "Manual"};
 
-    using namespace std::placeholders;
-    typedef std::function<float(int)> tDefaultValueFn;
+    typedef float (AutoCompressorAudioProcessor::*tDefaultValueFn)(int);
     tDefaultValueFn defaultFuncs[] = {
-        std::bind(&AutoCompressorAudioProcessor::getParameterDefaultValue, this, _1),
-        std::bind(&AutoCompressorAudioProcessor::getParameterDefaultValueManual, this, _1)
+        &AutoCompressorAudioProcessor::getParameterDefaultValue,
+        &AutoCompressorAudioProcessor::getParameterDefaultValueManual
     };
 
     for (int i = 0; i < CONST_NUM_PRESETS; ++i)
@@ -49,11 +48,12 @@ AutoCompressorAudioProcessor::AutoCompressorAudioProcessor()
 
         for (int j = 0; j < numAllParams; ++j)
         {
-            setParameter(j, defaultFuncs[i](j));
+            setParameter(j, (this->*(defaultFuncs[i]))(j));
         }
     }
 
     setCurrentProgram(0);
+
 }
 
 AutoCompressorAudioProcessor::~AutoCompressorAudioProcessor()
