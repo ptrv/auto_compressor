@@ -26,6 +26,7 @@ public:
         setSliderStyle(Slider::LinearHorizontal);
         setTextBoxStyle(Slider::TextBoxLeft, false, 80, 20);
         setTextValueSuffix(owner.getParameterLabel(index));
+        setScrollWheelEnabled(false);
     }
 
     void valueChanged()
