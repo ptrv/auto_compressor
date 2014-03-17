@@ -22,6 +22,7 @@
 #include "ParamButton.h"
 #include "ParamSlider.h"
 #include "AboutComponent.h"
+#include "jucetice_MeterComponent.h"
 //[/Headers]
 
 #include "PluginEditor.h"
@@ -37,61 +38,53 @@ AutoCompressorAudioProcessorEditor::AutoCompressorAudioProcessorEditor (AutoComp
     addAndMakeVisible (ratioSlider = new ParamSlider (*getProcessor(), ACProc::ratioParam));
     ratioSlider->setName ("ratioSlider");
 
-    addAndMakeVisible (label = new Label ("new label",
-                                          TRANS("compression ratio")));
-    label->setFont (Font (15.00f, Font::plain));
-    label->setJustificationType (Justification::centredLeft);
-    label->setEditable (false, false, false);
-    label->setColour (TextEditor::textColourId, Colours::black);
-    label->setColour (TextEditor::backgroundColourId, Colour (0x00000000));
+    addAndMakeVisible (ratioLabel = new Label ("ratioLabel",
+                                               TRANS("compression ratio")));
+    ratioLabel->setFont (Font (15.00f, Font::plain));
+    ratioLabel->setJustificationType (Justification::centredLeft);
+    ratioLabel->setEditable (false, false, false);
+    ratioLabel->setColour (TextEditor::textColourId, Colours::black);
+    ratioLabel->setColour (TextEditor::backgroundColourId, Colour (0x00000000));
 
-    addAndMakeVisible (label2 = new Label ("new label",
-                                           TRANS("knee width")));
-    label2->setFont (Font (15.00f, Font::plain));
-    label2->setJustificationType (Justification::centredLeft);
-    label2->setEditable (false, false, false);
-    label2->setColour (TextEditor::textColourId, Colours::black);
-    label2->setColour (TextEditor::backgroundColourId, Colour (0x00000000));
+    addAndMakeVisible (kneeWidthLabel = new Label ("kneeWidthLabel",
+                                                   TRANS("knee width")));
+    kneeWidthLabel->setFont (Font (15.00f, Font::plain));
+    kneeWidthLabel->setJustificationType (Justification::centredLeft);
+    kneeWidthLabel->setEditable (false, false, false);
+    kneeWidthLabel->setColour (TextEditor::textColourId, Colours::black);
+    kneeWidthLabel->setColour (TextEditor::backgroundColourId, Colour (0x00000000));
 
-    addAndMakeVisible (label3 = new Label ("new label",
-                                           TRANS("attack time")));
-    label3->setFont (Font (15.00f, Font::plain));
-    label3->setJustificationType (Justification::centredLeft);
-    label3->setEditable (false, false, false);
-    label3->setColour (TextEditor::textColourId, Colours::black);
-    label3->setColour (TextEditor::backgroundColourId, Colour (0x00000000));
+    addAndMakeVisible (attackLabel = new Label ("attackLabel",
+                                                TRANS("attack time")));
+    attackLabel->setFont (Font (15.00f, Font::plain));
+    attackLabel->setJustificationType (Justification::centredLeft);
+    attackLabel->setEditable (false, false, false);
+    attackLabel->setColour (TextEditor::textColourId, Colours::black);
+    attackLabel->setColour (TextEditor::backgroundColourId, Colour (0x00000000));
 
-    addAndMakeVisible (label4 = new Label ("new label",
-                                           TRANS("release time")));
-    label4->setFont (Font (15.00f, Font::plain));
-    label4->setJustificationType (Justification::centredLeft);
-    label4->setEditable (false, false, false);
-    label4->setColour (TextEditor::textColourId, Colours::black);
-    label4->setColour (TextEditor::backgroundColourId, Colour (0x00000000));
+    addAndMakeVisible (releaseLabel = new Label ("releaseLabel",
+                                                 TRANS("release time")));
+    releaseLabel->setFont (Font (15.00f, Font::plain));
+    releaseLabel->setJustificationType (Justification::centredLeft);
+    releaseLabel->setEditable (false, false, false);
+    releaseLabel->setColour (TextEditor::textColourId, Colours::black);
+    releaseLabel->setColour (TextEditor::backgroundColourId, Colour (0x00000000));
 
-    addAndMakeVisible (label5 = new Label ("new label",
-                                           TRANS("make-up gain")));
-    label5->setFont (Font (15.00f, Font::plain));
-    label5->setJustificationType (Justification::centredLeft);
-    label5->setEditable (false, false, false);
-    label5->setColour (TextEditor::textColourId, Colours::black);
-    label5->setColour (TextEditor::backgroundColourId, Colour (0x00000000));
+    addAndMakeVisible (gainLabel = new Label ("gainLabel",
+                                              TRANS("make-up gain")));
+    gainLabel->setFont (Font (15.00f, Font::plain));
+    gainLabel->setJustificationType (Justification::centredLeft);
+    gainLabel->setEditable (false, false, false);
+    gainLabel->setColour (TextEditor::textColourId, Colours::black);
+    gainLabel->setColour (TextEditor::backgroundColourId, Colour (0x00000000));
 
-    addAndMakeVisible (label6 = new Label ("new label",
-                                           TRANS("threshold")));
-    label6->setFont (Font (15.00f, Font::plain));
-    label6->setJustificationType (Justification::centredLeft);
-    label6->setEditable (false, false, false);
-    label6->setColour (TextEditor::textColourId, Colours::black);
-    label6->setColour (TextEditor::backgroundColourId, Colour (0x00000000));
-
-    addAndMakeVisible (meterValueLabel = new Label ("meterValueLabel",
-                                                    TRANS("0.0")));
-    meterValueLabel->setFont (Font (15.00f, Font::plain));
-    meterValueLabel->setJustificationType (Justification::centredLeft);
-    meterValueLabel->setEditable (false, false, false);
-    meterValueLabel->setColour (TextEditor::textColourId, Colours::black);
-    meterValueLabel->setColour (TextEditor::backgroundColourId, Colour (0x00000000));
+    addAndMakeVisible (thresholdLabel = new Label ("thresholdLabel",
+                                                   TRANS("threshold")));
+    thresholdLabel->setFont (Font (15.00f, Font::plain));
+    thresholdLabel->setJustificationType (Justification::centredLeft);
+    thresholdLabel->setEditable (false, false, false);
+    thresholdLabel->setColour (TextEditor::textColourId, Colours::black);
+    thresholdLabel->setColour (TextEditor::backgroundColourId, Colour (0x00000000));
 
     addAndMakeVisible (aboutButton = new ImageButton ("aboutButton"));
     aboutButton->setButtonText (String::empty);
@@ -138,6 +131,9 @@ AutoCompressorAudioProcessorEditor::AutoCompressorAudioProcessorEditor (AutoComp
     addAndMakeVisible (autoReleaseButton = new ParamButton (*getProcessor(), ACProc::autoReleaseParam));
     autoReleaseButton->setName ("autoReleaseButton");
 
+    addAndMakeVisible (meterComp = new MeterComponent (MeterComponent::MeterHorizontal, 20, 2, Colour(0xff176fff), Colour(0xff176fff), Colour(0xff176fff)));
+    meterComp->setName ("meterComp");
+
 
     //[UserPreSize]
     aboutComp = new AboutComponent();
@@ -165,13 +161,12 @@ AutoCompressorAudioProcessorEditor::~AutoCompressorAudioProcessorEditor()
     //[/Destructor_pre]
 
     ratioSlider = nullptr;
-    label = nullptr;
-    label2 = nullptr;
-    label3 = nullptr;
-    label4 = nullptr;
-    label5 = nullptr;
-    label6 = nullptr;
-    meterValueLabel = nullptr;
+    ratioLabel = nullptr;
+    kneeWidthLabel = nullptr;
+    attackLabel = nullptr;
+    releaseLabel = nullptr;
+    gainLabel = nullptr;
+    thresholdLabel = nullptr;
     aboutButton = nullptr;
     presetBox = nullptr;
     thresholdSlider = nullptr;
@@ -184,6 +179,7 @@ AutoCompressorAudioProcessorEditor::~AutoCompressorAudioProcessorEditor()
     autoGainButton = nullptr;
     autoAttackButton = nullptr;
     autoReleaseButton = nullptr;
+    meterComp = nullptr;
 
 
     //[Destructor]. You can add your own custom destruction code here..
@@ -224,13 +220,12 @@ void AutoCompressorAudioProcessorEditor::paint (Graphics& g)
 void AutoCompressorAudioProcessorEditor::resized()
 {
     ratioSlider->setBounds (144, 148, 212, 32);
-    label->setBounds (16, 152, 120, 24);
-    label2->setBounds (16, 192, 80, 24);
-    label3->setBounds (16, 312, 80, 24);
-    label4->setBounds (16, 360, 94, 24);
-    label5->setBounds (16, 248, 100, 24);
-    label6->setBounds (16, 104, 80, 24);
-    meterValueLabel->setBounds (16, 60, 72, 24);
+    ratioLabel->setBounds (16, 152, 120, 24);
+    kneeWidthLabel->setBounds (16, 192, 80, 24);
+    attackLabel->setBounds (16, 312, 80, 24);
+    releaseLabel->setBounds (16, 360, 94, 24);
+    gainLabel->setBounds (16, 248, 100, 24);
+    thresholdLabel->setBounds (16, 104, 80, 24);
     aboutButton->setBounds (356, 16, 76, 20);
     presetBox->setBounds (144, 60, 208, 20);
     thresholdSlider->setBounds (144, 100, 212, 32);
@@ -243,6 +238,7 @@ void AutoCompressorAudioProcessorEditor::resized()
     autoGainButton->setBounds (392, 248, 52, 24);
     autoAttackButton->setBounds (392, 316, 52, 24);
     autoReleaseButton->setBounds (392, 356, 52, 24);
+    meterComp->setBounds (20, 64, 100, 12);
     //[UserResized] Add your own custom resize handling here..
     //[/UserResized]
 }
@@ -339,7 +335,7 @@ void AutoCompressorAudioProcessorEditor::updateWidgets(const NotificationType no
         autoReleaseButton->setToggleState(autoReleaseActive, notification);
     }
 
-    meterValueLabel->setText(String(processor->getMeter(), 2), notification);
+    meterComp->setValue(1.0f - processor->getMeter());
 
     const bool currentPreset = processor->getCurrentProgram();
     if (currentPreset != presetBox->getSelectedId() - 1)
@@ -377,39 +373,34 @@ BEGIN_JUCER_METADATA
   <GENERICCOMPONENT name="ratioSlider" id="e051fdb064a119b2" memberName="ratioSlider"
                     virtualName="" explicitFocusOrder="0" pos="144 148 212 32" class="ParamSlider"
                     params="*getProcessor(), ACProc::ratioParam"/>
-  <LABEL name="new label" id="28411f247b38ffe2" memberName="label" virtualName=""
-         explicitFocusOrder="0" pos="16 152 120 24" edTextCol="ff000000"
+  <LABEL name="ratioLabel" id="28411f247b38ffe2" memberName="ratioLabel"
+         virtualName="" explicitFocusOrder="0" pos="16 152 120 24" edTextCol="ff000000"
          edBkgCol="0" labelText="compression ratio" editableSingleClick="0"
          editableDoubleClick="0" focusDiscardsChanges="0" fontname="Default font"
          fontsize="15" bold="0" italic="0" justification="33"/>
-  <LABEL name="new label" id="dc3bfe5fa125e797" memberName="label2" virtualName=""
-         explicitFocusOrder="0" pos="16 192 80 24" edTextCol="ff000000"
+  <LABEL name="kneeWidthLabel" id="dc3bfe5fa125e797" memberName="kneeWidthLabel"
+         virtualName="" explicitFocusOrder="0" pos="16 192 80 24" edTextCol="ff000000"
          edBkgCol="0" labelText="knee width" editableSingleClick="0" editableDoubleClick="0"
          focusDiscardsChanges="0" fontname="Default font" fontsize="15"
          bold="0" italic="0" justification="33"/>
-  <LABEL name="new label" id="2a1d30cbfcf1fbc8" memberName="label3" virtualName=""
-         explicitFocusOrder="0" pos="16 312 80 24" edTextCol="ff000000"
+  <LABEL name="attackLabel" id="2a1d30cbfcf1fbc8" memberName="attackLabel"
+         virtualName="" explicitFocusOrder="0" pos="16 312 80 24" edTextCol="ff000000"
          edBkgCol="0" labelText="attack time" editableSingleClick="0"
          editableDoubleClick="0" focusDiscardsChanges="0" fontname="Default font"
          fontsize="15" bold="0" italic="0" justification="33"/>
-  <LABEL name="new label" id="e0cf7038120d40c1" memberName="label4" virtualName=""
-         explicitFocusOrder="0" pos="16 360 94 24" edTextCol="ff000000"
+  <LABEL name="releaseLabel" id="e0cf7038120d40c1" memberName="releaseLabel"
+         virtualName="" explicitFocusOrder="0" pos="16 360 94 24" edTextCol="ff000000"
          edBkgCol="0" labelText="release time" editableSingleClick="0"
          editableDoubleClick="0" focusDiscardsChanges="0" fontname="Default font"
          fontsize="15" bold="0" italic="0" justification="33"/>
-  <LABEL name="new label" id="2c2c65be9dad5998" memberName="label5" virtualName=""
-         explicitFocusOrder="0" pos="16 248 100 24" edTextCol="ff000000"
+  <LABEL name="gainLabel" id="2c2c65be9dad5998" memberName="gainLabel"
+         virtualName="" explicitFocusOrder="0" pos="16 248 100 24" edTextCol="ff000000"
          edBkgCol="0" labelText="make-up gain" editableSingleClick="0"
          editableDoubleClick="0" focusDiscardsChanges="0" fontname="Default font"
          fontsize="15" bold="0" italic="0" justification="33"/>
-  <LABEL name="new label" id="18f79e7fdd006853" memberName="label6" virtualName=""
-         explicitFocusOrder="0" pos="16 104 80 24" edTextCol="ff000000"
+  <LABEL name="thresholdLabel" id="18f79e7fdd006853" memberName="thresholdLabel"
+         virtualName="" explicitFocusOrder="0" pos="16 104 80 24" edTextCol="ff000000"
          edBkgCol="0" labelText="threshold" editableSingleClick="0" editableDoubleClick="0"
-         focusDiscardsChanges="0" fontname="Default font" fontsize="15"
-         bold="0" italic="0" justification="33"/>
-  <LABEL name="meterValueLabel" id="bde683baa9c34be7" memberName="meterValueLabel"
-         virtualName="" explicitFocusOrder="0" pos="16 60 72 24" edTextCol="ff000000"
-         edBkgCol="0" labelText="0.0" editableSingleClick="0" editableDoubleClick="0"
          focusDiscardsChanges="0" fontname="Default font" fontsize="15"
          bold="0" italic="0" justification="33"/>
   <IMAGEBUTTON name="aboutButton" id="82925c62ef6980b6" memberName="aboutButton"
@@ -451,6 +442,9 @@ BEGIN_JUCER_METADATA
   <GENERICCOMPONENT name="autoReleaseButton" id="e81e1fc3121ab8f1" memberName="autoReleaseButton"
                     virtualName="" explicitFocusOrder="0" pos="392 356 52 24" class="ParamButton"
                     params="*getProcessor(), ACProc::autoReleaseParam"/>
+  <GENERICCOMPONENT name="meterComp" id="9671aa124d1a4c42" memberName="meterComp"
+                    virtualName="" explicitFocusOrder="0" pos="20 64 100 12" class="MeterComponent"
+                    params="MeterComponent::MeterHorizontal, 20, 2, Colour(0xff176fff), Colour(0xff176fff), Colour(0xff176fff)"/>
 </JUCER_COMPONENT>
 
 END_JUCER_METADATA

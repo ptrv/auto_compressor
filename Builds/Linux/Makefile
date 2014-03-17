@@ -51,6 +51,7 @@ ifeq ($(CONFIG),Release)
 endif
 
 OBJECTS := \
+  $(OBJDIR)/jucetice_MeterComponent_eb94c830.o \
   $(OBJDIR)/AboutComponent_ebbe5b79.o \
   $(OBJDIR)/PluginEditor_94d4fb09.o \
   $(OBJDIR)/PluginProcessor_a059e380.o \
@@ -88,6 +89,11 @@ clean:
 strip:
 	@echo Stripping AutoCompressor
 	-@strip --strip-unneeded $(OUTDIR)/$(TARGET)
+
+$(OBJDIR)/jucetice_MeterComponent_eb94c830.o: ../../Source/jucetice_MeterComponent.cpp
+	-@mkdir -p $(OBJDIR)
+	@echo "Compiling jucetice_MeterComponent.cpp"
+	@$(CXX) $(CXXFLAGS) -o "$@" -c "$<"
 
 $(OBJDIR)/AboutComponent_ebbe5b79.o: ../../Source/AboutComponent.cpp
 	-@mkdir -p $(OBJDIR)

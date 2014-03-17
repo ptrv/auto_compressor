@@ -13,16 +13,20 @@
               jucerVersion="3.1.0">
   <MAINGROUP id="W5KdEx" name="AutoCompressor">
     <GROUP id="{34ECFFED-2325-3EEE-FB6E-6B907580A0AD}" name="Source">
-      <FILE id="B4M0dS" name="ParamButton.h" compile="0" resource="0" file="Source/ParamButton.h"/>
-      <FILE id="CpToZs" name="AboutComponent.cpp" compile="1" resource="0"
-            file="Source/AboutComponent.cpp"/>
-      <FILE id="c19xaw" name="AboutComponent.h" compile="0" resource="0"
-            file="Source/AboutComponent.h"/>
       <GROUP id="{877C6314-3FE4-C5FD-A825-A80298F6ECFA}" name="BinaryData">
         <FILE id="Y7JRbB" name="bt_off.png" compile="0" resource="1" file="Source/BinaryData/bt_off.png"/>
         <FILE id="TIIhw8" name="bt_on.png" compile="0" resource="1" file="Source/BinaryData/bt_on.png"/>
         <FILE id="bAUSoo" name="bt_on2.png" compile="0" resource="1" file="Source/BinaryData/bt_on2.png"/>
       </GROUP>
+      <FILE id="s4dm63" name="jucetice_MeterComponent.cpp" compile="1" resource="0"
+            file="Source/jucetice_MeterComponent.cpp"/>
+      <FILE id="mq5S7t" name="jucetice_MeterComponent.h" compile="0" resource="0"
+            file="Source/jucetice_MeterComponent.h"/>
+      <FILE id="B4M0dS" name="ParamButton.h" compile="0" resource="0" file="Source/ParamButton.h"/>
+      <FILE id="CpToZs" name="AboutComponent.cpp" compile="1" resource="0"
+            file="Source/AboutComponent.cpp"/>
+      <FILE id="c19xaw" name="AboutComponent.h" compile="0" resource="0"
+            file="Source/AboutComponent.h"/>
       <FILE id="QvpAYp" name="ParamSlider.h" compile="0" resource="0" file="Source/ParamSlider.h"/>
       <FILE id="R403uc" name="PluginEditor.cpp" compile="1" resource="0"
             file="Source/PluginEditor.cpp"/>

@@ -25,6 +25,7 @@
 class ParamButton;
 class ParamSlider;
 class AboutComponent;
+class MeterComponent;
 //[/Headers]
 
 
@@ -76,13 +77,12 @@ private:
 
     //==============================================================================
     ScopedPointer<ParamSlider> ratioSlider;
-    ScopedPointer<Label> label;
-    ScopedPointer<Label> label2;
-    ScopedPointer<Label> label3;
-    ScopedPointer<Label> label4;
-    ScopedPointer<Label> label5;
-    ScopedPointer<Label> label6;
-    ScopedPointer<Label> meterValueLabel;
+    ScopedPointer<Label> ratioLabel;
+    ScopedPointer<Label> kneeWidthLabel;
+    ScopedPointer<Label> attackLabel;
+    ScopedPointer<Label> releaseLabel;
+    ScopedPointer<Label> gainLabel;
+    ScopedPointer<Label> thresholdLabel;
     ScopedPointer<ImageButton> aboutButton;
     ScopedPointer<ComboBox> presetBox;
     ScopedPointer<ParamSlider> thresholdSlider;
@@ -95,6 +95,7 @@ private:
     ScopedPointer<ParamButton> autoGainButton;
     ScopedPointer<ParamButton> autoAttackButton;
     ScopedPointer<ParamButton> autoReleaseButton;
+    ScopedPointer<MeterComponent> meterComp;
 
 
     //==============================================================================
