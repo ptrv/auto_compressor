@@ -96,6 +96,12 @@ private:
     ScopedPointer<ParamButton> autoAttackButton;
     ScopedPointer<ParamButton> autoReleaseButton;
     ScopedPointer<MeterComponent> meterComp;
+    ScopedPointer<Label> autoKneeLabel;
+    ScopedPointer<Label> autoGainLabel;
+    ScopedPointer<Label> autoAttackLabel;
+    ScopedPointer<Label> autoReleaseLabel;
+    ScopedPointer<Label> meterLabel;
+    ScopedPointer<Label> meterLabel2;
 
 
     //==============================================================================

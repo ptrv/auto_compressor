@@ -134,6 +134,55 @@ AutoCompressorAudioProcessorEditor::AutoCompressorAudioProcessorEditor (AutoComp
     addAndMakeVisible (meterComp = new MeterComponent (MeterComponent::MeterHorizontal, 20, 2, Colour(0xff176fff), Colour(0xff176fff), Colour(0xff176fff), Colour(0xff393939)));
     meterComp->setName ("meterComp");
 
+    addAndMakeVisible (autoKneeLabel = new Label ("autoKneeLabel",
+                                                  TRANS("auto knee")));
+    autoKneeLabel->setFont (Font (11.00f, Font::plain));
+    autoKneeLabel->setJustificationType (Justification::centredLeft);
+    autoKneeLabel->setEditable (false, false, false);
+    autoKneeLabel->setColour (TextEditor::textColourId, Colours::black);
+    autoKneeLabel->setColour (TextEditor::backgroundColourId, Colour (0x00000000));
+
+    addAndMakeVisible (autoGainLabel = new Label ("autoGainLabel",
+                                                  TRANS("auto gain")));
+    autoGainLabel->setFont (Font (11.00f, Font::plain));
+    autoGainLabel->setJustificationType (Justification::centredLeft);
+    autoGainLabel->setEditable (false, false, false);
+    autoGainLabel->setColour (TextEditor::textColourId, Colours::black);
+    autoGainLabel->setColour (TextEditor::backgroundColourId, Colour (0x00000000));
+
+    addAndMakeVisible (autoAttackLabel = new Label ("autoAttackLabel",
+                                                    TRANS("auto attack")));
+    autoAttackLabel->setFont (Font (11.00f, Font::plain));
+    autoAttackLabel->setJustificationType (Justification::centredLeft);
+    autoAttackLabel->setEditable (false, false, false);
+    autoAttackLabel->setColour (TextEditor::textColourId, Colours::black);
+    autoAttackLabel->setColour (TextEditor::backgroundColourId, Colour (0x00000000));
+
+    addAndMakeVisible (autoReleaseLabel = new Label ("autoReleaseLabel",
+                                                     TRANS("auto release")));
+    autoReleaseLabel->setFont (Font (11.00f, Font::plain));
+    autoReleaseLabel->setJustificationType (Justification::centredLeft);
+    autoReleaseLabel->setEditable (false, false, false);
+    autoReleaseLabel->setColour (TextEditor::textColourId, Colours::black);
+    autoReleaseLabel->setColour (TextEditor::backgroundColourId, Colour (0x00000000));
+
+    addAndMakeVisible (meterLabel = new Label ("meterLabel",
+                                               TRANS("gain reduction")));
+    meterLabel->setFont (Font (11.00f, Font::plain));
+    meterLabel->setJustificationType (Justification::centredLeft);
+    meterLabel->setEditable (false, false, false);
+    meterLabel->setColour (TextEditor::textColourId, Colours::black);
+    meterLabel->setColour (TextEditor::backgroundColourId, Colour (0x00000000));
+
+    addAndMakeVisible (meterLabel2 = new Label ("meterLabel",
+                                                TRANS("comp.\n"
+                                                "active")));
+    meterLabel2->setFont (Font (11.00f, Font::plain));
+    meterLabel2->setJustificationType (Justification::centred);
+    meterLabel2->setEditable (false, false, false);
+    meterLabel2->setColour (TextEditor::textColourId, Colours::black);
+    meterLabel2->setColour (TextEditor::backgroundColourId, Colour (0x00000000));
+
 
     //[UserPreSize]
     aboutComp = new AboutComponent();
@@ -180,6 +229,12 @@ AutoCompressorAudioProcessorEditor::~AutoCompressorAudioProcessorEditor()
     autoAttackButton = nullptr;
     autoReleaseButton = nullptr;
     meterComp = nullptr;
+    autoKneeLabel = nullptr;
+    autoGainLabel = nullptr;
+    autoAttackLabel = nullptr;
+    autoReleaseLabel = nullptr;
+    meterLabel = nullptr;
+    meterLabel2 = nullptr;
 
 
     //[Destructor]. You can add your own custom destruction code here..
@@ -227,18 +282,24 @@ void AutoCompressorAudioProcessorEditor::resized()
     gainLabel->setBounds (16, 248, 100, 24);
     thresholdLabel->setBounds (16, 104, 80, 24);
     aboutButton->setBounds (356, 16, 76, 20);
-    presetBox->setBounds (144, 60, 208, 20);
+    presetBox->setBounds (144, 60, 212, 20);
     thresholdSlider->setBounds (144, 100, 212, 32);
     kneeWidthSlider->setBounds (144, 188, 212, 32);
     gainSlider->setBounds (144, 244, 212, 32);
     attackSlider->setBounds (144, 308, 212, 32);
     releaseSlider->setBounds (144, 356, 212, 32);
-    activeButton->setBounds (392, 60, 52, 24);
+    activeButton->setBounds (392, 72, 52, 24);
     autoKneeButton->setBounds (392, 172, 52, 24);
     autoGainButton->setBounds (392, 248, 52, 24);
     autoAttackButton->setBounds (392, 316, 52, 24);
     autoReleaseButton->setBounds (392, 356, 52, 24);
-    meterComp->setBounds (20, 64, 100, 12);
+    meterComp->setBounds (20, 72, 100, 12);
+    autoKneeLabel->setBounds (388, 156, 56, 16);
+    autoGainLabel->setBounds (388, 232, 56, 16);
+    autoAttackLabel->setBounds (388, 300, 64, 16);
+    autoReleaseLabel->setBounds (388, 340, 64, 16);
+    meterLabel->setBounds (16, 56, 88, 16);
+    meterLabel2->setBounds (396, 48, 44, 24);
     //[UserResized] Add your own custom resize handling here..
     //[/UserResized]
 }
@@ -410,7 +471,7 @@ BEGIN_JUCER_METADATA
                opacityOver="1" colourOver="0" resourceDown="" opacityDown="1"
                colourDown="0"/>
   <COMBOBOX name="presetBox" id="2afad6bbbce571cd" memberName="presetBox"
-            virtualName="" explicitFocusOrder="0" pos="144 60 208 20" editable="1"
+            virtualName="" explicitFocusOrder="0" pos="144 60 212 20" editable="1"
             layout="33" items="" textWhenNonSelected="" textWhenNoItems="(no choices)"/>
   <GENERICCOMPONENT name="thresholdSlider" id="f502a58f03897f59" memberName="thresholdSlider"
                     virtualName="" explicitFocusOrder="0" pos="144 100 212 32" class="ParamSlider"
@@ -428,7 +489,7 @@ BEGIN_JUCER_METADATA
                     virtualName="" explicitFocusOrder="0" pos="144 356 212 32" class="ParamSlider"
                     params="*getProcessor(), ACProc::releaseParam"/>
   <GENERICCOMPONENT name="activeButton" id="2e5d635360384691" memberName="activeButton"
-                    virtualName="" explicitFocusOrder="0" pos="392 60 52 24" class="ParamButton"
+                    virtualName="" explicitFocusOrder="0" pos="392 72 52 24" class="ParamButton"
                     params="*getProcessor(), ACProc::activeParam, true"/>
   <GENERICCOMPONENT name="autoKneeButton" id="955f50f500671424" memberName="autoKneeButton"
                     virtualName="" explicitFocusOrder="0" pos="392 172 52 24" class="ParamButton"
@@ -445,6 +506,36 @@ BEGIN_JUCER_METADATA
   <GENERICCOMPONENT name="meterComp" id="9671aa124d1a4c42" memberName="meterComp"
                     virtualName="" explicitFocusOrder="0" pos="20 72 100 12" class="MeterComponent"
                     params="MeterComponent::MeterHorizontal, 20, 2, Colour(0xff176fff), Colour(0xff176fff), Colour(0xff176fff), Colour(0xff393939)"/>
+  <LABEL name="autoKneeLabel" id="d1e338b64af9e6d7" memberName="autoKneeLabel"
+         virtualName="" explicitFocusOrder="0" pos="388 156 56 16" edTextCol="ff000000"
+         edBkgCol="0" labelText="auto knee" editableSingleClick="0" editableDoubleClick="0"
+         focusDiscardsChanges="0" fontname="Default font" fontsize="11"
+         bold="0" italic="0" justification="33"/>
+  <LABEL name="autoGainLabel" id="b643405d2da66da2" memberName="autoGainLabel"
+         virtualName="" explicitFocusOrder="0" pos="388 232 56 16" edTextCol="ff000000"
+         edBkgCol="0" labelText="auto gain" editableSingleClick="0" editableDoubleClick="0"
+         focusDiscardsChanges="0" fontname="Default font" fontsize="11"
+         bold="0" italic="0" justification="33"/>
+  <LABEL name="autoAttackLabel" id="2d9961ef1ffa4aba" memberName="autoAttackLabel"
+         virtualName="" explicitFocusOrder="0" pos="388 300 64 16" edTextCol="ff000000"
+         edBkgCol="0" labelText="auto attack" editableSingleClick="0"
+         editableDoubleClick="0" focusDiscardsChanges="0" fontname="Default font"
+         fontsize="11" bold="0" italic="0" justification="33"/>
+  <LABEL name="autoReleaseLabel" id="b433d36af4f7a8c8" memberName="autoReleaseLabel"
+         virtualName="" explicitFocusOrder="0" pos="388 340 64 16" edTextCol="ff000000"
+         edBkgCol="0" labelText="auto release" editableSingleClick="0"
+         editableDoubleClick="0" focusDiscardsChanges="0" fontname="Default font"
+         fontsize="11" bold="0" italic="0" justification="33"/>
+  <LABEL name="meterLabel" id="e16d72ef2d78ae78" memberName="meterLabel"
+         virtualName="" explicitFocusOrder="0" pos="16 56 88 16" edTextCol="ff000000"
+         edBkgCol="0" labelText="gain reduction" editableSingleClick="0"
+         editableDoubleClick="0" focusDiscardsChanges="0" fontname="Default font"
+         fontsize="11" bold="0" italic="0" justification="33"/>
+  <LABEL name="meterLabel" id="3cc15c2d5c71bfdc" memberName="meterLabel2"
+         virtualName="" explicitFocusOrder="0" pos="396 48 44 24" edTextCol="ff000000"
+         edBkgCol="0" labelText="comp.&#10;active" editableSingleClick="0"
+         editableDoubleClick="0" focusDiscardsChanges="0" fontname="Default font"
+         fontsize="11" bold="0" italic="0" justification="36"/>
 </JUCER_COMPONENT>
 
 END_JUCER_METADATA
