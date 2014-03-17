@@ -39,7 +39,7 @@ AboutComponent::AboutComponent ()
     label->setColour (TextEditor::backgroundColourId, Colour (0x00000000));
 
     addAndMakeVisible (label2 = new Label ("new label",
-                                           TRANS("Algotithm:")));
+                                           TRANS("Algorithm:")));
     label2->setFont (Font (14.00f, Font::plain));
     label2->setJustificationType (Justification::centredRight);
     label2->setEditable (false, false, false);
@@ -137,7 +137,7 @@ BEGIN_JUCER_METADATA
          fontname="Default font" fontsize="22" bold="0" italic="0" justification="36"/>
   <LABEL name="new label" id="3c5571406df92a9" memberName="label2" virtualName=""
          explicitFocusOrder="0" pos="8 72 96 24" textCol="ffffffff" edTextCol="ff000000"
-         edBkgCol="0" labelText="Algotithm:" editableSingleClick="0" editableDoubleClick="0"
+         edBkgCol="0" labelText="Algorithm:" editableSingleClick="0" editableDoubleClick="0"
          focusDiscardsChanges="0" fontname="Default font" fontsize="14"
          bold="0" italic="0" justification="34"/>
   <LABEL name="new label" id="e034cd879cbfa610" memberName="label4" virtualName=""
