@@ -131,7 +131,7 @@ AutoCompressorAudioProcessorEditor::AutoCompressorAudioProcessorEditor (AutoComp
     addAndMakeVisible (autoReleaseButton = new ParamButton (*getProcessor(), ACProc::autoReleaseParam));
     autoReleaseButton->setName ("autoReleaseButton");
 
-    addAndMakeVisible (meterComp = new MeterComponent (MeterComponent::MeterHorizontal, 20, 2, Colour(0xff176fff), Colour(0xff176fff), Colour(0xff176fff)));
+    addAndMakeVisible (meterComp = new MeterComponent (MeterComponent::MeterHorizontal, 20, 2, Colour(0xff176fff), Colour(0xff176fff), Colour(0xff176fff), Colour(0xff393939)));
     meterComp->setName ("meterComp");
 
 
@@ -443,8 +443,8 @@ BEGIN_JUCER_METADATA
                     virtualName="" explicitFocusOrder="0" pos="392 356 52 24" class="ParamButton"
                     params="*getProcessor(), ACProc::autoReleaseParam"/>
   <GENERICCOMPONENT name="meterComp" id="9671aa124d1a4c42" memberName="meterComp"
-                    virtualName="" explicitFocusOrder="0" pos="20 64 100 12" class="MeterComponent"
-                    params="MeterComponent::MeterHorizontal, 20, 2, Colour(0xff176fff), Colour(0xff176fff), Colour(0xff176fff)"/>
+                    virtualName="" explicitFocusOrder="0" pos="20 72 100 12" class="MeterComponent"
+                    params="MeterComponent::MeterHorizontal, 20, 2, Colour(0xff176fff), Colour(0xff176fff), Colour(0xff176fff), Colour(0xff393939)"/>
 </JUCER_COMPONENT>
 
 END_JUCER_METADATA
