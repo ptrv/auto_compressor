@@ -21,7 +21,7 @@
 #define __JUCE_HEADER_6F5BC92BB0597534__
 
 //[Headers]     -- You can add your own extra header files here --
-#include "JuceHeader.h"
+#include "../JuceLibraryCode/JuceHeader.h"
 //[/Headers]
 
 
@@ -59,6 +59,7 @@ private:
     ScopedPointer<Label> label2;
     ScopedPointer<Label> label4;
     ScopedPointer<HyperlinkButton> githubLink;
+    ScopedPointer<Label> versionLabel;
 
 
     //==============================================================================

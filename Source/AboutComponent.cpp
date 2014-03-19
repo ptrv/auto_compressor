@@ -62,8 +62,20 @@ AboutComponent::AboutComponent ()
     githubLink->setButtonText (TRANS("https://github.com/ptrv/auto_compressor"));
     githubLink->setColour (HyperlinkButton::textColourId, Colour (0xccffffff));
 
+    addAndMakeVisible (versionLabel = new Label ("versionLabel",
+                                                 TRANS("Version:")));
+    versionLabel->setFont (Font (15.00f, Font::plain));
+    versionLabel->setJustificationType (Justification::centred);
+    versionLabel->setEditable (false, false, false);
+    versionLabel->setColour (Label::textColourId, Colours::white);
+    versionLabel->setColour (TextEditor::textColourId, Colours::black);
+    versionLabel->setColour (TextEditor::backgroundColourId, Colour (0x00000000));
+
 
     //[UserPreSize]
+    String versionText = String("Version: ") + String(ProjectInfo::versionString);
+    String buildDate = " (Build: " + String(__DATE__) + " " + String(__TIME__) + ")";
+    versionLabel->setText(versionText + buildDate, dontSendNotification);
     //[/UserPreSize]
 
     setSize (400, 200);
@@ -82,6 +94,7 @@ AboutComponent::~AboutComponent()
     label2 = nullptr;
     label4 = nullptr;
     githubLink = nullptr;
+    versionLabel = nullptr;
 
 
     //[Destructor]. You can add your own custom destruction code here..
@@ -105,7 +118,8 @@ void AboutComponent::resized()
     label->setBounds (8, 16, 384, 32);
     label2->setBounds (8, 72, 96, 24);
     label4->setBounds (104, 64, 288, 40);
-    githubLink->setBounds (8, 144, 384, 24);
+    githubLink->setBounds (8, 128, 384, 24);
+    versionLabel->setBounds (8, 168, 384, 24);
     //[UserResized] Add your own custom resize handling here..
     //[/UserResized]
 }
@@ -146,9 +160,14 @@ BEGIN_JUCER_METADATA
          editableSingleClick="0" editableDoubleClick="0" focusDiscardsChanges="0"
          fontname="Default font" fontsize="14" bold="0" italic="0" justification="33"/>
   <HYPERLINKBUTTON name="githubLink" id="a97bde346e8147bb" memberName="githubLink"
-                   virtualName="" explicitFocusOrder="0" pos="8 144 384 24" tooltip="http://www.juce.com"
+                   virtualName="" explicitFocusOrder="0" pos="8 128 384 24" tooltip="http://www.juce.com"
                    textCol="ccffffff" buttonText="https://github.com/ptrv/auto_compressor"
                    connectedEdges="0" needsCallback="0" radioGroupId="0" url="http://www.juce.com"/>
+  <LABEL name="versionLabel" id="35ce77a7e38b4b75" memberName="versionLabel"
+         virtualName="" explicitFocusOrder="0" pos="8 168 384 24" textCol="ffffffff"
+         edTextCol="ff000000" edBkgCol="0" labelText="Version:" editableSingleClick="0"
+         editableDoubleClick="0" focusDiscardsChanges="0" fontname="Default font"
+         fontsize="15" bold="0" italic="0" justification="36"/>
 </JUCER_COMPONENT>
 
 END_JUCER_METADATA
