@@ -330,9 +330,9 @@ void AutoCompressorAudioProcessorEditor::comboBoxChanged (ComboBox* comboBoxThat
         //[UserComboBoxCode_presetBox] -- add your combo box handling code here..
         AutoCompressorAudioProcessor* const processor = getProcessor();
 
-        // const int selectedId = presetBox->getSelectedId();
         const int selectedItem = presetBox->getSelectedItemIndex();
-        if (processor->getCurrentProgram() != selectedItem)
+        if (processor->getCurrentProgram() != selectedItem
+            && isPositiveAndNotGreaterThan(selectedItem, processor->getNumPrograms()))
         {
             processor->setCurrentProgram(selectedItem);
             processor->updateHostDisplay();
@@ -341,7 +341,7 @@ void AutoCompressorAudioProcessorEditor::comboBoxChanged (ComboBox* comboBoxThat
         if (processor->getProgramName(processor->getCurrentProgram()).compare(currentText) != 0)
         {
             processor->changeProgramName(processor->getCurrentProgram(), currentText);
-            presetBox->changeItemText(selectedItem, currentText);
+            presetBox->changeItemText(processor->getCurrentProgram()+1, currentText);
         }
 
         //[/UserComboBoxCode_presetBox]
